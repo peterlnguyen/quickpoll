@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1 = title
+
+  form(method="post", action="")
+    div
+      label(for="question") Question:
+      input(type="text", name="question", id="question")
+    div
+      label(for="choice1") Choice 1:
+      input(type="text", name="choice1", id="choice1")
+    div
+      label(for="choice2") Choice 2:
+      input(type="text", name="choice2", id="choice2")
+    div
+      label(for="choice3") Choice 3:
+      input(type="text", name="choice3", id="choice3")
+    div
+      label(for="allowMultiple") Allow multiple answers?
+      input(type="checkbox", name="allowMultiple", id="allowMultiple")
+    div
+      label(for="requireName") Require name?
+      input(type="checkbox", name="requireName", id="requireName")
+    

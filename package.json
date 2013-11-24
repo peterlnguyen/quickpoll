@@ -15,6 +15,7 @@
     "stylus": "*",
     "coffee-script": "~1.6.3",
     "express-coffee": "git://github.com/elisee/express-coffee.git",
-    "should": "~2.1.0"
+    "should": "~2.1.0",
+    "winston": "~0.7.2"
   }
 }
