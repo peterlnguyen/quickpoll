@@ -1,6 +1,5 @@
-class BaseTest
-  @assert = require "assert"
+class Test
   @should = require "should"
 
-module.exports = BaseTest
+module.exports = Test
 
