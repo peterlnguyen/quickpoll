@@ -5,11 +5,16 @@
   "scripts": {
     "start": "coffee app.coffee"
   },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
   "dependencies": {
     "express": "3.4.4",
     "jade": "*",
     "stylus": "*",
     "coffee-script": "~1.6.3",
-    "express-coffee": "git://github.com/elisee/express-coffee.git"
+    "express-coffee": "git://github.com/elisee/express-coffee.git",
+    "should": "~2.1.0"
   }
 }
