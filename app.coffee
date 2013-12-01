@@ -23,17 +23,11 @@ app.use express.session()
 app.use app.router
 app.use require("stylus").middleware(path.join(__dirname, "public"))
 app.use express.static(path.join(__dirname, "public"))
-env = app.get 'env'
-app.use require('express-coffee')(
-  path: path.join( __dirname, 'public' )
-  live: env != 'production'
-  uglify: env == 'production'
-  debug: env != 'production'
-)
 
 # development only
 app.use express.errorHandler()  if "development" is app.get("env")
 app.get "/", routes.index
+app.post "/createForm", routes.create_form
 app.get "/users", user.list
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
