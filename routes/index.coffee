@@ -7,5 +7,6 @@ exports.index = (req, res) ->
     title: "Express"
 
 exports.create_form = (req, res) ->
+  pollCreator.process_form req, res
   res.render "index",
     title: "Form Created!"

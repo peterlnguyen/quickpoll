@@ -10,7 +10,7 @@ $(document).ready ->
   # currently only checks for empty, will fix later
   has_errors = (inputs) ->
     error_flag = false
-    for value, key in inputs 
+    for value, key in inputs
       if value is ""
         error_flag = true
     console.log "error?", error_flag
