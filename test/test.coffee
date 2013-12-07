@@ -1,5 +1,6 @@
-class Test
-  @should = require "should"
+should = require "should"
+expect = require "expect"
+request = require "superagent"
+  
 
-module.exports = Test
 

@@ -4,7 +4,6 @@ Module dependencies.
 ###
 express = require("express")
 routes = require("./routes")
-user = require("./routes/user")
 http = require("http")
 path = require("path")
 app = express()
@@ -22,13 +21,13 @@ app.use express.cookieParser("your secret here")
 app.use express.session()
 app.use app.router
 app.use require("stylus").middleware(path.join(__dirname, "public"))
+app.use(express.compress())
 app.use express.static(path.join(__dirname, "public"))
 
 # development only
 app.use express.errorHandler()  if "development" is app.get("env")
 app.get "/", routes.index
 app.post "/createForm", routes.create_form
-app.get "/users", user.list
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
 
