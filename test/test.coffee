@@ -1,6 +1,7 @@
-should = require "should"
-expect = require "expect"
-request = require "superagent"
+@should = require "should"
+@expect = require "expect.js"
+@request = require "supertest"
   
+
 
 

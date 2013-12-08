@@ -21,6 +21,7 @@
     "connect": "~2.11.0",
     "underscore": "~1.5.2",
     "async": "~0.2.9",
-    "expect": "0.0.2"
+    "expect.js": "~0.2.0",
+    "supertest": "~0.8.2"
   }
 }
