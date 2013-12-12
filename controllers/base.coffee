@@ -1,5 +1,6 @@
 _ = require "underscore"
 async = require "async"
+mongo = require "../models/mongo_connection"
 
 # this class provides utility functions,
 # logging, infrastructure, etc.
@@ -23,3 +24,6 @@ module.exports = class Base
     console.log "generated key:", text
     text
 
+  @render_error: (err, res) ->
+    res.render "error",
+      title: err

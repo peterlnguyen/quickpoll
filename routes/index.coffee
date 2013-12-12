@@ -8,4 +8,4 @@ exports.index = (req, res) ->
     title: "Express"
 
 exports.create_form = (req, res) ->
-  pollCreator.process_form req, res
+  pollCreator.process_form {req: req, res: res}
