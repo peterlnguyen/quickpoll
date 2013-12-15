@@ -2,6 +2,8 @@ Base = require "./base"
 mongo = require "../models/mongo_connection"
 mongo.connect()
 
+
+
 module.exports = class PollCreator extends Base
 
   @process_form: (req_res) ->

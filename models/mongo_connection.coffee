@@ -1,9 +1,7 @@
 mongo = require("mongodb").MongoClient
+CSON = require "cson"
+defaults = CSON.parseFileSync "./models/mongo_defaults.cson"
 
-defaults =
-  server: "mongodb://127.0.0.1:27017/"
-  db: "polls"
-  collection: "polls"
 
 
 module.exports = class Mongo
@@ -21,8 +19,8 @@ module.exports = class Mongo
   @get_coll: (db, coll) ->
     db.collection(coll)
 
+  # set connection settings to default where not specified by user
   @process_options: (options) ->
-    # set connection settings to default where not specified by user
     if options
       { server, db, collection } = options
     server ?= defaults.server
@@ -36,13 +34,15 @@ module.exports = class Mongo
     console.log "#{server}#{db}"
     url = server + db
     mongo.connect url, (err, db) ->
-      console.log "err:", err
+      #console.log "err:", err
       @db = db
       # console.log "db:", db
       @coll = @db.collection(collection)
-      console.log "coll: ", @coll
+      #console.log "coll: ", @coll
 
   @insert: (form, callback) ->
+    console.log "coll here: ", @coll
+    console.log "db: ", @db
     @coll.insert(form, callback)
 
   @find: (query, callback) ->
