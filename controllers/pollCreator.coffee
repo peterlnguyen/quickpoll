@@ -1,10 +1,11 @@
 Base = require "./base"
+mongo = require "../models/mongo_connection"
 
 module.exports = class PollCreator extends Base
 
   @process_form: (req_res) ->
     {req, res} = req_res
-    form = @extract_body req
+    form = @get_formatted_body req
     form_with_id = @add_id form
 
     # attempts to save, retrieve, and render poll; throws err otherwise
@@ -29,8 +30,7 @@ module.exports = class PollCreator extends Base
         @render_poll req_res, poll
  
 
-  # formats form data
-  @extract_body: (req) ->
+  @get_formatted_body: (req) ->
     body = req.body
     allow_multiple = if body.allowMultiple then true else false
     require_name = if body.requireName then true else false
@@ -49,7 +49,7 @@ module.exports = class PollCreator extends Base
   @render_poll: (req_res, poll) ->
     {req, res} = req_res
     res.render "index",
-      title: "Form Created!"
+      title: "Poll Rendered!"
 
   @save_poll_to_db = (form, callback) ->
     mongo.insert(form, callback)
