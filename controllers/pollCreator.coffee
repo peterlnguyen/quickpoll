@@ -12,26 +12,31 @@ module.exports = class PollCreator extends Base
     form_with_id = @add_id form
 
     # attempts to save, retrieve, and render poll; throws err otherwise
-    @save_poll_to_db form_with_id, (err, save_res) ->
+    @save_poll_to_db form_with_id, (err, save_res) =>
       if err
-        @render_error err, res
+        @render_error err, save_res
       else
         @retrieve_and_render save_res, req_res
 
-  @add_id: (form) ->
-    form_id = @generate_random 5
-    form.id = form_id
-    form
-
-  @retrieve_and_render = (retrieve_query, req_res) ->
+  @retrieve_and_render: (retrieve_query, req_res) ->
+    console.log "retrieve_query: #{JSON.stringify(retrieve_query)}"
     {req, res} = req_res
-    @retrieve_poll retrieve_query, (err, retrieve_res) ->
+    { _id } = retrieve_query[0]
+    console.log "asdf: ", retrieve_query[0]._id
+    console.log "_id: #{_id}"
+    @retrieve_poll _id, (err, retrieve_res) =>
       if err
         @render_error err, retrieve_res
       else
+        console.log "err: #{err}"
+        console.log "retrieve_res: #{JSON.stringify(retrieve_res)}"
         poll = retrieve_res[0]
         @render_poll req_res, poll
- 
+
+  @add_id: (form) ->
+    form_id = @generate_random 5
+    form.url_id = form_id
+    form
 
   @get_formatted_body: (req) ->
     body = req.body
@@ -51,6 +56,7 @@ module.exports = class PollCreator extends Base
 
   @render_poll: (req_res, poll) ->
     {req, res} = req_res
+    console.log "poll: #{poll}"
     res.render "index",
       title: "Poll Rendered!"
 

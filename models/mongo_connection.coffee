@@ -6,8 +6,8 @@ defaults = CSON.parseFileSync "./models/mongo_defaults.cson"
 
 module.exports = class Mongo
 
-  @db = null
-  @coll = null
+  db_conn = null
+  coll = null
 
   # @todo: need to specify which db
   @delete_db: (callback) ->
@@ -33,20 +33,16 @@ module.exports = class Mongo
 
     console.log "#{server}#{db}"
     url = server + db
-    mongo.connect url, (err, db) ->
-      #console.log "err:", err
-      @db = db
-      # console.log "db:", db
-      @coll = @db.collection(collection)
-      #console.log "coll: ", @coll
+    mongo.connect url, (err, db) =>
+      db_conn = db
+      coll = db_conn.collection(collection)
 
+  # @coll is null because connection is not persistent
   @insert: (form, callback) ->
-    console.log "coll here: ", @coll
-    console.log "db: ", @db
-    @coll.insert(form, callback)
+    coll.insert(form, callback)
 
   @find: (query, callback) ->
-    @coll.find(query, callback)
+    coll.find(query, callback)
 
 
 
