@@ -21,7 +21,7 @@ module.exports = class Base
     possible = "abcdefghijklmnopqrstuvwxyz0123456789"
     while length-- > 0
       text += possible.charAt(Math.floor(Math.random() * possible.length))
-    console.log "generated key:", text
+    #console.log "generated key:", text
     text
 
   @render_error: (err, res) ->

@@ -35,13 +35,20 @@ module.exports = class Mongo
     url = server + db
     mongo.connect url, (err, db) =>
       db_conn = db
+      #console.log db_conn.collection("polls")
+      # count returns correct amount, perhaps my query is wrong
+      db_conn.collection("polls").count (err, count) =>
+        console.log "#{err}, #{count}"
+      db_conn.collection("polls").find (err, res) =>
+        console.log "res connect: ", JSON.stringify(res)
       coll = db_conn.collection(collection)
 
-  # @coll is null because connection is not persistent
   @insert: (form, callback) ->
     coll.insert(form, callback)
 
   @find: (query, callback) ->
+    console.log "query: ", query
+    #console.log "find: #{coll}"
     coll.find(query, callback)
 
 
