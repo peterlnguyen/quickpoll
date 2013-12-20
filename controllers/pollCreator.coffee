@@ -20,25 +20,18 @@ module.exports = class PollCreator extends Base
 
   @retrieve_and_render: (retrieve_query, req_res) ->
     {req, res} = req_res
+    # immediately parse custom url_id to retrieve poll
     url_id = retrieve_query[0].url_id
-    #console.log "asdf: #{JSON.stringify(retrieve_query[0]._id)}"
-    console.log "url_id: ", url_id
-    console.log "retrieve_query: ", JSON.stringify(retrieve_query)
-    
-    # retrieve request and params looks good, but no results.
-    # suspect problem is with the interface, or "coll" object in model
-    # count returns  correct amount, perhaps my query is wrong.
-    @retrieve_poll { url_id: "#{url_id}" }, (err, retrieve_res) =>
+
+    @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
       if err
         @render_error err, retrieve_res
       else
-        console.log "retrieve_res: #{JSON.stringify(retrieve_res)}"
-        poll = retrieve_res[0]
-        @render_poll req_res, poll
+        @render_poll req_res, retrieve_res
 
   @render_poll: (req_res, poll) ->
     {req, res} = req_res
-    console.log "poll: #{poll}"
+    console.log "poll: #{JSON.stringify(poll)}"
     res.render "index",
       title: "Poll Rendered!"
 
@@ -68,4 +61,4 @@ module.exports = class PollCreator extends Base
     mongo.insert(form, callback)
 
   @retrieve_poll = (query, callback) ->
-    mongo.find(query, callback)
+    mongo.find_one(query, callback)
