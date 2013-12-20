@@ -45,7 +45,7 @@ module.exports = class PollCreator extends Base
     allow_multiple = if body.allowMultiple then true else false
     require_name = if body.requireName then true else false
 
-    params =
+    {
       question: body.question
       choices:
         choice1: body.choice1
@@ -54,8 +54,7 @@ module.exports = class PollCreator extends Base
       options:
         allow_multiple: allow_multiple
         require_name: require_name
-    params
-
+    }
 
   @save_poll_to_db = (form, callback) ->
     mongo.insert(form, callback)
