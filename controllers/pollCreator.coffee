@@ -1,4 +1,5 @@
 Base = require "./base"
+Render = require "../views/render"
 mongo = require "../models/mongo_connection"
 mongo.connect()
 
@@ -14,7 +15,7 @@ module.exports = class PollCreator extends Base
     # attempts to save, retrieve, and render poll; throws err otherwise
     @save_poll_to_db form_with_id, (err, save_res) =>
       if err
-        @render_error err, save_res
+        Render.render_error err, save_res
       else
         @retrieve_and_render save_res, req_res
 
@@ -25,15 +26,13 @@ module.exports = class PollCreator extends Base
 
     @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
       if err
-        @render_error err, retrieve_res
+        Render.render_error err, retrieve_res
       else
         @render_poll req_res, retrieve_res
 
   @render_poll: (req_res, poll) ->
     {req, res} = req_res
-    console.log "poll: #{JSON.stringify(poll)}"
-    res.render "index",
-      title: "Poll Rendered!"
+    Render.render_poll "poll", res
 
   @add_id: (form) ->
     form_id = @generate_random 15
