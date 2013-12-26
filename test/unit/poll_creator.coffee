@@ -1,8 +1,9 @@
 chai = require "chai"
 expect = chai.expect
-poll_creator = require "../../controllers/poll_creator"
+Poll_Creator = require "../../controllers/poll_creator"
+poll_creator = new Poll_Creator
 
-describe "poll_creator unit test (no database interaction)", ->
+describe "Poll_Creator unit test (no database interaction)", ->
 
   describe "get_formatted_body", ->
 
@@ -45,32 +46,29 @@ describe "poll_creator unit test (no database interaction)", ->
 
   describe "save and retrieve poll", ->
 
+    form =
+      question: "Should we go to Vegas?"
+      choices:
+        choice1: "Yes"
+        choice2: "No"
+        choice3: "Maybe"
+      options:
+        allow_multiple: true
+        require_name: false
+    form_with_id = poll_creator.add_id form
+
     describe "save_poll_to_db", ->
+      it "should return the successfully saved object", ->
+        poll_creator.save_poll_to_db form_with_id, (err, res) ->
+          saved_object = res[0]
+          expect(saved_object).to.deep.equal(form_with_id)
 
-      form =
-        question: "Should we go to Vegas?"
-        choices:
-          choice1: "Yes"
-          choice2: "No"
-          choice3: "Maybe"
-        options:
-          allow_multiple: true
-          require_name: false
-
-      describe "something", ->
-        it "should something", ->
-          poll_creator.save_poll_to_db form, (err, res) ->
-            saved_object = res[0]
-            expect(saved_object).to.deep.equal(form)
-
+          setTimeout ->
             describe "retrieve_poll", ->
               it "should return the queried object", (done) ->
                 {url_id} = saved_object
-                poll_creator.retrieve_poll { url_id: url_id }, (err, res) ->
-                  console.log form
-                  console.log saved_object
-                  console.log form
-                  expect(res).to.deep.equal(form)
+                poll_creator.retrieve_poll { url_id: url_id }, (err, result) ->
+                  expect(result).to.deep.equal(saved_object)
                   done()
-
+          , 3000
 

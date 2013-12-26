@@ -1,14 +1,17 @@
 Base = require "./base"
 Render = require "../views/render"
 Mongo = require "../models/mongo_connection"
-mongo = (new Mongo)
-console.log mongo
+
 
 
 
 module.exports = class Poll_Creator extends Base
 
-  @process_form: (req_res) ->
+  constructor: ->
+    @mongo = new Mongo
+    super()
+
+  process_form: (req_res) ->
     {req, res} = req_res
     form = @get_formatted_body req
     form_with_id = @add_id form
@@ -20,7 +23,7 @@ module.exports = class Poll_Creator extends Base
       else
         @retrieve_and_render save_res, req_res
 
-  @retrieve_and_render: (retrieve_query, req_res) ->
+  retrieve_and_render: (retrieve_query, req_res) ->
     {req, res} = req_res
     # immediately parse custom url_id to retrieve poll
     url_id = retrieve_query[0].url_id
@@ -32,16 +35,16 @@ module.exports = class Poll_Creator extends Base
       else
         @render_poll req_res, retrieve_res
 
-  @render_poll: (req_res, poll) ->
+  render_poll: (req_res, poll) ->
     {req, res} = req_res
     Render.render_poll "poll", res
 
-  @add_id: (form) ->
+  add_id: (form) ->
     form_id = @generate_random 15
     form.url_id = form_id
     form
 
-  @get_formatted_body: (req) ->
+  get_formatted_body: (req) ->
     body = req.body
     allow_multiple = if body.allow_multiple then true else false
     require_name = if body.require_name then true else false
@@ -57,8 +60,8 @@ module.exports = class Poll_Creator extends Base
         require_name: require_name
     }
 
-  @save_poll_to_db = (form, callback) ->
-    mongo.insert(form, callback)
+  save_poll_to_db: (form, callback) ->
+    @mongo.insert(form, callback)
 
-  @retrieve_poll = (query, callback) ->
-    mongo.find_one(query, callback)
+  retrieve_poll: (query, callback) ->
+    @mongo.find_one(query, callback)

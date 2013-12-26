@@ -6,24 +6,22 @@ defaults = CSON.parseFileSync "./models/mongo_defaults.cson"
 
 module.exports = class Mongo
 
-  @db_conn: null
-  @coll: null
-
-  constructor: ->
+  constructor: (@db_conn, @coll) ->
+    # automatically connects to default, can override with manual connection
     @connect()
 
   # @todo: need to specify which db
-  @delete_db: (callback) ->
+  delete_db: (callback) ->
     @coll.drop callback
 
-  @create_coll: (coll) ->
+  create_coll: (coll) ->
     @db.createCollection(coll)
 
-  @get_coll: (db, coll) ->
+  get_coll: (db, coll) ->
     db.collection(coll)
 
   # set connection settings to default where not specified by user
-  @process_options: (options) ->
+  process_options: (options) ->
     if options
       { server, db, collection } = options
     server ?= defaults.server
@@ -31,7 +29,7 @@ module.exports = class Mongo
     collection ?= defaults.collection
     { server, db, collection }
 
-  @connect: (options) ->
+  connect: (options) ->
     { server, db, collection } = @process_options options
 
     console.log "#{server}#{db}"
@@ -40,9 +38,9 @@ module.exports = class Mongo
       @db_conn = db
       @coll = @db_conn.collection(collection)
 
-  @insert: (form, callback) ->
+  insert: (form, callback) ->
     @coll.insert(form, callback)
 
-  @find_one: (query, callback) ->
+  find_one: (query, callback) ->
     # findOne() works, but find() returns empty set... strange
     @coll.findOne(query, callback)

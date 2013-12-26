@@ -5,8 +5,10 @@
 # logging, infrastructure, etc.
 module.exports = class Base
 
+  constructor: ->
+
   # sanitize form data
-  @escape_html: (text) ->
+  escape_html: (text) ->
     text
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
@@ -15,7 +17,7 @@ module.exports = class Base
       .replace(/'/g, "&#039;")
 
   # code copied from http://stackoverflow.com/a/1349426
-  @generate_random: (length) ->
+  generate_random: (length) ->
     text = ""
     possible = "abcdefghijklmnopqrstuvwxyz0123456789"
     while length-- > 0

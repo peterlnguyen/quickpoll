@@ -3,8 +3,6 @@
 
 module.exports = class Render
 
-  constructor: ->
-
   @render_error: (err, res) ->
     res.render "error",
       title: err
