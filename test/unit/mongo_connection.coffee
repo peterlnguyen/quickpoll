@@ -100,6 +100,7 @@ describe "mongo_connection unit test", ->
 
             describe "for existing doc", ->
               it "should return retrieved doc", (done) ->
+                # retrieved_doc instead of res because find_one only returns one result
                 mongo.find_one { rand_id: rand_id_expected }, (err, retrieved_doc) ->
                   should.not.exist(err)
                   retrieved_doc.should.exist
