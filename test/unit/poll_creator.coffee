@@ -1,7 +1,7 @@
 assert = require "assert"
-should = require "should"
-expect = require "expect.js"
-request = require "request"
+#should = require "should"
+chai = require "chai"
+expect = chai.expect
 poll_creator = require "../../controllers/poll_creator"
 
 describe "poll_creator unit test (no database interaction)", ->
@@ -29,7 +29,7 @@ describe "poll_creator unit test (no database interaction)", ->
 
     it "should extrapolate and format form data", ->
       result = poll_creator.get_formatted_body input
-      assert.deepEqual result, expected
+      expect(result).to.deep.equal(expected)
 
 
   describe "add_id", ->
@@ -39,9 +39,10 @@ describe "poll_creator unit test (no database interaction)", ->
 
     it "should append a url_id field to the top level of object", ->
       result = poll_creator.add_id input
-      result.url_id.should.exist
-      # lowers chance of collision
-      assert(result.url_id.toString().length > 10)
+      {url_id} = result
+      url_id.should.exist
+      # minimum length lowers chance of collision
+      expect(url_id).to.have.length.above(10)
     
 
   describe "save and retrieve poll", ->
@@ -58,19 +59,18 @@ describe "poll_creator unit test (no database interaction)", ->
           allow_multiple: true
           require_name: false
 
-      it "should return the successfully saved object", ->
-        poll_creator.save_poll_to_db form, (err, res) ->
-          saved_object = res[0]
-          assert.deepEqual saved_object, form
+      poll_creator.save_poll_to_db form, (err, res) ->
+        saved_object = res[0]
+        expect(saved_object).to.deep.equal(form)
 
-          describe "retrieve_poll", ->
-            it "should return the queried object", (done) ->
-              {url_id} = saved_object
-              poll_creator.retrieve_poll { url_id: url_id }, (err, res) ->
-                console.log form
-                console.log saved_object
-                console.log form
-                assert.deepEqual res, form
-                done()
+        describe "retrieve_poll", ->
+          it "should return the queried object", (done) ->
+            {url_id} = saved_object
+            poll_creator.retrieve_poll { url_id: url_id }, (err, res) ->
+              console.log form
+              console.log saved_object
+              console.log form
+              expect(res).to.deep.equal(form)
+              done()
 
 
