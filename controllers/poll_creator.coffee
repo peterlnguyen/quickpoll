@@ -7,11 +7,6 @@ mongo.connect()
 
 module.exports = class Poll_Creator extends Base
 
-  @constructor: ->
-
-  @connect: ->
-    mongo.connect()
-
   @process_form: (req_res) ->
     {req, res} = req_res
     form = @get_formatted_body req

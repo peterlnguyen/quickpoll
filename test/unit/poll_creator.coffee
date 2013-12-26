@@ -57,8 +57,6 @@ describe "poll_creator unit test (no database interaction)", ->
           allow_multiple: true
           require_name: false
 
-      poll_creator.connect()
-
       poll_creator.save_poll_to_db form, (err, res) ->
         saved_object = res[0]
         expect(saved_object).to.deep.equal(form)

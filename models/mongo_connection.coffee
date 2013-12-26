@@ -6,7 +6,8 @@ defaults = CSON.parseFileSync "./models/mongo_defaults.cson"
 
 module.exports = class Mongo
 
-  @constructor: ->
+  db_conn = null
+  coll = null
 
   # @todo: need to specify which db
   @delete_db: (callback) ->
@@ -33,16 +34,12 @@ module.exports = class Mongo
     console.log "#{server}#{db}"
     url = server + db
     mongo.connect url, (err, db) =>
-      console.log "hello world :)"
-      console.log @db_conn
-      @db_conn = db
-      @coll = db_conn.collection(collection)
+      db_conn = db
+      coll = db_conn.collection(collection)
 
   @insert: (form, callback) ->
-    @coll.insert(form, callback)
+    coll.insert(form, callback)
 
   @find_one: (query, callback) ->
     # findOne() works, but find() returns empty set... strange
-    setTimeout ->
-      @coll.findOne(query, callback)
-    , 1000
+    coll.findOne(query, callback)
