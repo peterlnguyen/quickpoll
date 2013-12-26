@@ -14,7 +14,7 @@ module.exports = class Mongo
 
   # @todo: need to specify which coll
   delete_coll: (coll, callback) ->
-    @coll.drop(coll, callback)
+    @db_conn.collection(coll).drop(callback)
 
   create_coll: (coll, callback) ->
     @db_conn.createCollection(coll, callback)

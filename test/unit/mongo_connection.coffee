@@ -1,4 +1,5 @@
 chai = require "chai"
+should = require "should"
 expect = chai.expect
 
 Mongo = require "../../models/mongo_connection"
@@ -47,11 +48,31 @@ describe "mongo_connection unit test", ->
       coll.should.exist
       done()
 
-      describe "create and delete db", ->
-        it "should return the successfully created db", (done) ->
+      describe "create and delete collection", ->
 
+        describe "create collection", ->
+          it "should return the successfully created collection", (done) ->
+            mongo.create_coll "test-coll", (err, res) ->
+              should.not.exist(err)
+              should.exist(res)
+              done()
 
+              describe "delete collection", ->
+                describe "for existing collection", ->
+                  it "should return true for successfully deleted collection", (done) ->
+                    mongo.delete_coll "test-coll", (err, res) ->
+                      should.not.exist(err)
+                      should.exist(res)
+                      res.should.be.true
+                      done()
 
+                describe "for nonexistent collection", ->
+                  it "should return false for nonexistent collection", (done) ->
+                    mongo.delete_coll "nonexistent-coll", (err, res) ->
+                      should.exist(err)
+                      should.exist(res)
+                      res.should.be.false
+                      done()
 
 
 
