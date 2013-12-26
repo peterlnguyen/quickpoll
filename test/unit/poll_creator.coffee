@@ -58,17 +58,18 @@ describe "Poll_Creator unit test (no database interaction)", ->
     form_with_id = poll_creator.add_id form
 
     describe "save_poll_to_db", ->
-      it "should return the successfully saved object", ->
+      it "should return the successfully saved object", (done) ->
         poll_creator.save_poll_to_db form_with_id, (err, res) ->
           saved_object = res[0]
           expect(saved_object).to.deep.equal(form_with_id)
+          console.log "hello world"
+          done()
 
-          setTimeout ->
-            describe "retrieve_poll", ->
-              it "should return the queried object", (done) ->
-                {url_id} = saved_object
-                poll_creator.retrieve_poll { url_id: url_id }, (err, result) ->
-                  expect(result).to.deep.equal(saved_object)
-                  done()
-          , 3000
+          describe "retrieve_poll", ->
+            it "should return the queried object", (done) ->
+              console.log "fizz buzz"
+              {url_id} = saved_object
+              poll_creator.retrieve_poll { url_id: url_id }, (err, result) ->
+                expect(result).to.deep.equal(saved_object)
+                done()
 

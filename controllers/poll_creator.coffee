@@ -28,7 +28,6 @@ module.exports = class Poll_Creator extends Base
     # immediately parse custom url_id to retrieve poll
     url_id = retrieve_query[0].url_id
 
-    # setTimeout to allow mongodb to save docs
     @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
       if err
         Render.render_error err, retrieve_res
