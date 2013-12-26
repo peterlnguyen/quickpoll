@@ -3,6 +3,7 @@ CSON = require "cson"
 defaults = CSON.parseFileSync "./models/mongo_defaults.cson"
 
 
+
 module.exports = class Mongo
 
   constructor: (@db_conn, @coll) ->
@@ -30,11 +31,14 @@ module.exports = class Mongo
 
   connect: (options) ->
     { server, db, collection } = @process_options options
-    console.log "#{server}#{db}"
+    #console.log "#{server}#{db}"
     url = server + db
     mongo.connect url, (err, db) =>
-      @db_conn = db
-      @coll = @db_conn.collection(collection)
+      if err
+        console.error "Mongo connection error: #{err}"
+      else
+        @db_conn = db
+        @coll = @db_conn.collection(collection)
 
   insert: (form, callback) ->
     @coll.insert(form, callback)

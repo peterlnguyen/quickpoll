@@ -17,6 +17,7 @@ module.exports = class Poll_Creator extends Base
     # attempts to save, retrieve, and render poll; throws err otherwise
     @save_poll_to_db form_with_id, (err, save_res) =>
       if err
+        console.error "Save poll error: #{err}"
         Render.render_error err, save_res
       else
         @retrieve_and_render save_res, req_res
@@ -28,6 +29,7 @@ module.exports = class Poll_Creator extends Base
 
     @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
       if err
+        console.error "Retrieve poll error: #{err}"
         Render.render_error err, retrieve_res
       else
         @render_poll req_res, retrieve_res
