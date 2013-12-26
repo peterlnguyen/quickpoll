@@ -4,7 +4,7 @@ Poll_Creator = require "../../controllers/poll_creator"
 poll_creator = new Poll_Creator
 
 
-describe "Poll_Creator unit test (no database interaction)", ->
+describe "poll_creator unit test", ->
 
   describe "get_formatted_body", ->
 
@@ -43,7 +43,7 @@ describe "Poll_Creator unit test (no database interaction)", ->
       url_id.should.exist
       # minimum length lowers chance of collision
       expect(url_id).to.have.length.above(10)
-    
+
 
   describe "save and retrieve poll", ->
 
@@ -72,3 +72,8 @@ describe "Poll_Creator unit test (no database interaction)", ->
                 expect(result).to.deep.equal(saved_object)
                 done()
 
+  describe "render_poll", ->
+
+  describe "process_form", ->
+
+  describe "retrieve_and_render", ->
