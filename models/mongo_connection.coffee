@@ -19,9 +19,6 @@ module.exports = class Mongo
   create_coll: (coll, callback) ->
     @db_conn.createCollection(coll, callback)
 
-  get_coll: (coll) ->
-    @db_conn.collection(coll)
-
   # set connection settings to default where not specified by user
   process_options: (options) ->
     if options

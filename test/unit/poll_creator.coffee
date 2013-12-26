@@ -75,6 +75,7 @@ describe "poll_creator unit test", ->
                 expect(result).to.deep.equal(saved_object)
                 done()
 
+  # @todo
   describe "render_poll", ->
 
   describe "process_form", ->

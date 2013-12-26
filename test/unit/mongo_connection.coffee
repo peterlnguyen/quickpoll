@@ -39,6 +39,7 @@ describe "mongo_connection unit test", ->
       options.db.should.equal db
       options.collection.should.equal custom_collection
 
+
   describe "connect and interact with db", ->
     it "should connect to the default settings and instantiate db_connection and collection", (done) ->
       mongo.connect()
@@ -47,6 +48,7 @@ describe "mongo_connection unit test", ->
       db_conn.should.exist
       coll.should.exist
       done()
+
 
       describe "create and delete collection", ->
 
@@ -73,6 +75,44 @@ describe "mongo_connection unit test", ->
                       should.exist(res)
                       res.should.be.false
                       done()
+
+
+      describe "insert and find_one", ->
+
+        describe "insert", ->
+          rand_id_expected = Math.random()*10
+          form =
+            phrase: "test-form"
+            rand_id: rand_id_expected
+
+          it "should return successfully inserted object", (done) ->
+            # insert into default database/collection
+            mongo.insert form, (err, res) ->
+              saved_object = res[0]
+              {rand_id} = saved_object
+
+              should.not.exist(err)
+              saved_object.should.exist
+              expect(saved_object).to.deep.equal(form)
+              done()
+
+          describe "find_one", ->
+
+            describe "for existing doc", ->
+              it "should return retrieved doc", (done) ->
+                mongo.find_one { rand_id: rand_id_expected }, (err, retrieved_doc) ->
+                  should.not.exist(err)
+                  retrieved_doc.should.exist
+                  expect(retrieved_doc).to.deep.equal(form)
+                  done()
+
+            describe "for nonexistent doc", ->
+              it "should return retrieved doc", (done) ->
+                gibberish_id = Math.random()*10
+                mongo.find_one { rand_id: gibberish_id }, (err, res) ->
+                  should.not.exist(err)
+                  should.not.exist(res)
+                  done()
 
 
 
