@@ -4,21 +4,23 @@ defaults = CSON.parseFileSync "./models/mongo_defaults.cson"
 
 
 
+# all interactions assume a single, consistent db,
+# and many possible, volatile collections
 module.exports = class Mongo
 
   constructor: (@db_conn, @coll) ->
     # automatically connects to default, can override with manual connection
     @connect()
 
-  # @todo: need to specify which db
-  delete_db: (callback) ->
-    @coll.drop callback
+  # @todo: need to specify which coll
+  delete_coll: (coll, callback) ->
+    @coll.drop(coll, callback)
 
-  create_coll: (coll) ->
-    @db.createCollection(coll)
+  create_coll: (coll, callback) ->
+    @db_conn.createCollection(coll, callback)
 
-  get_coll: (db, coll) ->
-    db.collection(coll)
+  get_coll: (coll) ->
+    @db_conn.collection(coll)
 
   # set connection settings to default where not specified by user
   process_options: (options) ->

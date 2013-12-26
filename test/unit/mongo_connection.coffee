@@ -38,10 +38,31 @@ describe "mongo_connection unit test", ->
       options.db.should.equal db
       options.collection.should.equal custom_collection
 
-  describe "connect", ->
+  describe "connect and interact with db", ->
     it "should connect to the default settings and instantiate db_connection and collection", (done) ->
       mongo.connect()
       {db_conn, coll} = mongo
+
       db_conn.should.exist
       coll.should.exist
       done()
+
+      describe "create and delete db", ->
+        it "should return the successfully created db", (done) ->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

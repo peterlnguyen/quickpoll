@@ -4,6 +4,7 @@ Poll_Creator = require "../../controllers/poll_creator"
 poll_creator = new Poll_Creator
 
 
+
 describe "poll_creator unit test", ->
 
   describe "get_formatted_body", ->
