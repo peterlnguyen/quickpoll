@@ -3,6 +3,7 @@ expect = chai.expect
 Poll_Creator = require "../../controllers/poll_creator"
 poll_creator = new Poll_Creator
 
+
 describe "Poll_Creator unit test (no database interaction)", ->
 
   describe "get_formatted_body", ->
@@ -62,12 +63,10 @@ describe "Poll_Creator unit test (no database interaction)", ->
         poll_creator.save_poll_to_db form_with_id, (err, res) ->
           saved_object = res[0]
           expect(saved_object).to.deep.equal(form_with_id)
-          console.log "hello world"
           done()
 
           describe "retrieve_poll", ->
             it "should return the queried object", (done) ->
-              console.log "fizz buzz"
               {url_id} = saved_object
               poll_creator.retrieve_poll { url_id: url_id }, (err, result) ->
                 expect(result).to.deep.equal(saved_object)

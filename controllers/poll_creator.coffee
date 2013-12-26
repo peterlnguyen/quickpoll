@@ -3,8 +3,6 @@ Render = require "../views/render"
 Mongo = require "../models/mongo_connection"
 
 
-
-
 module.exports = class Poll_Creator extends Base
 
   constructor: ->
