@@ -1,7 +1,8 @@
 Base = require "./base"
 Render = require "../views/render"
-mongo = require "../models/mongo_connection"
-mongo.connect()
+Mongo = require "../models/mongo_connection"
+mongo = (new Mongo)
+console.log mongo
 
 
 

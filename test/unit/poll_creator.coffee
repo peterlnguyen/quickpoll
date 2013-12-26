@@ -57,18 +57,20 @@ describe "poll_creator unit test (no database interaction)", ->
           allow_multiple: true
           require_name: false
 
-      poll_creator.save_poll_to_db form, (err, res) ->
-        saved_object = res[0]
-        expect(saved_object).to.deep.equal(form)
+      describe "something", ->
+        it "should something", ->
+          poll_creator.save_poll_to_db form, (err, res) ->
+            saved_object = res[0]
+            expect(saved_object).to.deep.equal(form)
 
-        describe "retrieve_poll", ->
-          it "should return the queried object", (done) ->
-            {url_id} = saved_object
-            poll_creator.retrieve_poll { url_id: url_id }, (err, res) ->
-              console.log form
-              console.log saved_object
-              console.log form
-              expect(res).to.deep.equal(form)
-              done()
+            describe "retrieve_poll", ->
+              it "should return the queried object", (done) ->
+                {url_id} = saved_object
+                poll_creator.retrieve_poll { url_id: url_id }, (err, res) ->
+                  console.log form
+                  console.log saved_object
+                  console.log form
+                  expect(res).to.deep.equal(form)
+                  done()
 
 
