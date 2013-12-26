@@ -1,5 +1,3 @@
-assert = require "assert"
-#should = require "should"
 chai = require "chai"
 expect = chai.expect
 poll_creator = require "../../controllers/poll_creator"
@@ -58,6 +56,8 @@ describe "poll_creator unit test (no database interaction)", ->
         options:
           allow_multiple: true
           require_name: false
+
+      poll_creator.connect()
 
       poll_creator.save_poll_to_db form, (err, res) ->
         saved_object = res[0]
