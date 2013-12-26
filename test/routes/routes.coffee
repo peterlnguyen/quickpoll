@@ -1,5 +1,6 @@
-{should, expect, request} = require "./test"
-routes = require "../routes/index"
+should = require "should"
+expect = require "expect.js"
+request = require "request"
 express = require "express"
 app = express()
 
