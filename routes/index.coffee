@@ -1,9 +1,9 @@
-Poll_Creator = require "../controllers/poll_creator"
-poll_creator = new Poll_Creator
+PollCreator = require "../controllers/poll_creator"
+poll_creator = new PollCreator
 
 #
 # * GET home page.
-# 
+#
 
 exports.index = (req, res) ->
   res.render "create",

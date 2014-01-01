@@ -2,8 +2,8 @@ chai = require "chai"
 expect = chai.expect
 should = require "should"
 
-Poll_Creator = require "../../controllers/poll_creator"
-poll_creator = new Poll_Creator
+PollCreator = require "../../controllers/poll_creator"
+poll_creator = new PollCreator
 
 
 

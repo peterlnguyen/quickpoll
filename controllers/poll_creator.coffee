@@ -4,7 +4,7 @@ Mongo = require "../models/mongo_connection"
 
 
 
-module.exports = class Poll_Creator extends Base
+module.exports = class PollCreator extends Base
 
   constructor: ->
     @mongo = new Mongo
