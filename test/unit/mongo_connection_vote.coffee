@@ -19,27 +19,35 @@ describe "mongo_connection unit test for voting", ->
       form =
         rand_id: rand_id
         target:
-          field: "non-updated"
+          fields: [ "fish", "dog", "cat" ]
 
       mongo.insert form, (insert_error, insert_response) ->
         should.not.exist(insert_error)
-        console.log "insert response: ", insert_response
+        done()
 
-        it "should retrieve the inserted document", ->
-        mongo.find_one { rand_id: rand_id }, (find_error, find_response) ->
-          console.log "find_response: ", find_response
-          should.not.exist(find_error)
-          expect(find_response).to.deep.equal(insert_response[0])
-          
-          it "should update the retrieved document", ->
-            mongo.update { rand_id: rand_id }, { $set: { target: { field: "updated" } } }, (update_error, update_response) ->
-              console.log "update response: ", update_response
-              update_response.should.equal(1)
+        describe "find_one", ->
+          it "should retrieve the inserted document", (done) ->
+            mongo.find_one { rand_id: rand_id }, (find_error, find_response) ->
+              console.log "find: ", find_response
+              should.not.exist(find_error)
+              expect(find_response).to.deep.equal(insert_response[0])
+              done()
+              
+              describe "update", ->
+                it "should update the retrieved document", (done) ->
+                  mongo.update { rand_id: rand_id },
+                    { $push: { target: { fields: [ "monkey" ] } } },
+                    (update_error, update_response) ->
+                      console.log "update_error: ", update_error
+                      console.log "update_response: ", update_response
+                      update_response.should.equal(1)
+                      done()
 
-              it "should retrieve updated document", ->
-                mongo.find_one { rand_id: rand_id }, (updated_error, updated_response) ->
-                  console.log "find_response: ", updated_response
-                  should.not.exist(updated_error)
-                  updated_response.field.target.should.equal("updated")
-                  done()
-
+                      describe "find_one", ->
+                        it "should retrieve updated document", (done) ->
+                          mongo.find_one { rand_id: rand_id }, (updated_error, updated_response) ->
+                            should.not.exist(updated_error)
+                            console.log "update response: ", updated_response
+                            updated_response.target.field.should.contain("monkey")
+                            done()
+      
