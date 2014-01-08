@@ -1,5 +1,6 @@
 mongo = require("mongodb").MongoClient
 CSON = require "cson"
+# FIXME: stupid pathing won't load mongo_defaults from cson folder
 defaults = CSON.parseFileSync "./models/mongo_defaults.cson"
 
 

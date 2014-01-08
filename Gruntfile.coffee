@@ -38,7 +38,7 @@ module.exports = (grunt) ->
           arrow_spacing: true
           colon_assignment_spacing: 0
           missing_fat_arrows: "warn",
-          max_line_length: 300
+          max_line_length: 1000
 
   grunt.registerTask "default", [ "coffeelint", "concat", "uglify" ]
 

@@ -36,6 +36,7 @@ properties:
   poll_results:
     type: "object"
     properties:
+
       choices:
         type: "array"
         items:

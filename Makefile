@@ -1,6 +1,3 @@
-
-
-
 all:
 	make mocha &&\
 	grunt default &&\
@@ -8,4 +5,5 @@ all:
 	npm start
 mocha:
 	mocha --compilers coffee:coffee-script test/* -t 5000
-
+build:
+	npm start
