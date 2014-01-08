@@ -28,7 +28,6 @@ describe "mongo_connection unit test for voting", ->
         describe "find_one", ->
           it "should retrieve the inserted document", (done) ->
             mongo.find_one { rand_id: rand_id }, (find_error, find_response) ->
-              console.log "find: ", find_response
               should.not.exist(find_error)
               expect(find_response).to.deep.equal(insert_response[0])
               done()
@@ -36,10 +35,9 @@ describe "mongo_connection unit test for voting", ->
               describe "update", ->
                 it "should update the retrieved document", (done) ->
                   mongo.update { rand_id: rand_id },
-                    { $push: { target: { fields: [ "monkey" ] } } },
+                    { $push: { "target.fields": "monkey" } },
                     (update_error, update_response) ->
-                      console.log "update_error: ", update_error
-                      console.log "update_response: ", update_response
+                      should.not.exist(update_error)
                       update_response.should.equal(1)
                       done()
 
@@ -47,7 +45,6 @@ describe "mongo_connection unit test for voting", ->
                         it "should retrieve updated document", (done) ->
                           mongo.find_one { rand_id: rand_id }, (updated_error, updated_response) ->
                             should.not.exist(updated_error)
-                            console.log "update response: ", updated_response
-                            updated_response.target.field.should.contain("monkey")
+                            updated_response.target.fields.should.contain("monkey")
                             done()
       

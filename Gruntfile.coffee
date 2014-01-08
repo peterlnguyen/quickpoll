@@ -29,12 +29,10 @@ module.exports = (grunt) ->
         "*.coffee",
         "controllers/*.coffee", "models/*.coffee", "views/*.coffee",
         "routes/*.coffee",
-        "public/javascripts/*.coffee",
       ]
       tests:
         files:
           src: [
-            "test/unit/*.coffee"
           ]
         options:
           arrow_spacing: true
