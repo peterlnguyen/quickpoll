@@ -1,0 +1,68 @@
+title: "poll"
+description: "poll information containing question, choices, results, and meta data"
+type: "object"
+properties:
+
+  url_id:
+    description: "unguessable unique id in url, used as key to respective poll"
+    type: "string"
+
+  poll_query:
+    type: "object"
+    properties:
+
+      question:
+        type: "string"
+
+      choices:
+        type: "array"
+
+      options:
+        type: "object"
+        properties:
+          require_name:
+            type: "boolean"
+          allow_multiple:
+            type: "boolean"
+
+      meta:
+        type: "object"
+        properties:
+          date_created:
+            type: "string"
+          time_created:
+            type: "string"
+
+  poll_results:
+    type: "object"
+    properties:
+      choices:
+        type: "array"
+        items:
+          title: "results_by_choice"
+          type: "object"
+          properties:
+
+            choice_number:
+              type: "integer"
+
+            voter_names:
+              type: "array"
+              items:
+                type: "string"
+              uniqueItems: false
+                
+            num_votes:
+              type: "integer"
+
+      meta:
+        type: "object"
+        properties:
+          last_updated:
+            type: "string"
+          last_viewed:
+            type: "string"
+
+
+
+

@@ -10,6 +10,7 @@ module.exports = class PollCreator extends Base
     @mongo = new Mongo
     super()
 
+  # equivalent to your "main" function in creating a poll
   process_form: (req_res) ->
     {req, res} = req_res
     form = @get_formatted_body req
@@ -65,3 +66,4 @@ module.exports = class PollCreator extends Base
 
   retrieve_poll: (query, callback) ->
     @mongo.find_one(query, callback)
+
