@@ -18,18 +18,9 @@ module.exports = class PollUpdater
     body = req.body
     # TODO: need to decide body format for sending votes
 
-  count_one_vote: ( { choice_number, name, url_id }, req_res) ->
-    { req, res } = req_res
-
-    # TODO: make sure pushing to a particular array works
+  count_one_vote: ({ choice_number, name, url_id }, callback) ->
     @mongo.update { url_id: url_id, "poll_results.choices.choice_number": choice_number },
-      { $push: { "poll_results.choices.$.voter_names": name } },
-      (error, response) ->
-        if error
-          console.log "Single vote update error: #{error}"
-          Render.render_error error, res
-        else
-          # fetch and display poll
+      { $push: { "poll_results.choices.$.voter_names": name } }, callback
 
   # TODO
   count_many_votes: ({ votes_list, url_id }, req_res) ->

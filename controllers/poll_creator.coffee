@@ -51,14 +51,37 @@ module.exports = class PollCreator extends Base
     require_name = if body.require_name then true else false
 
     {
-      question: body.question
-      choices:
-        choice1: body.choice1
-        choice2: body.choice2
-        choice3: body.choice3
-      options:
-        allow_multiple: allow_multiple
-        require_name: require_name
+      poll_query:
+        question: body.question
+        choices:
+          choice1: body.choice1
+          choice2: body.choice2
+          choice3: body.choice3
+        options:
+          allow_multiple: allow_multiple
+          require_name: require_name
+
+      poll_results:
+        choices: [
+          {
+            choice_number: 1
+            choice: body.choice1
+            voter_names: []
+            num_votes: 0
+          },
+          {
+            choice_number: 2
+            choice: body.choice2
+            voter_names: []
+            num_votes: 0
+          },
+          {
+            choice_number: 3
+            choice: body.choice3
+            voter_names: []
+            num_votes: 0
+          }
+        ]
     }
 
   save_poll_to_db: (form, callback) ->

@@ -47,6 +47,9 @@ properties:
             choice_number:
               type: "integer"
 
+            choice:
+              type: "string"
+
             voter_names:
               type: "array"
               items:

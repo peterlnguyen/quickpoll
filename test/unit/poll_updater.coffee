@@ -21,5 +21,7 @@ describe "poll_updater unit test", ->
         res:
 
     it "should extrapolate and format form data", ->
-      result = poll_creator.get_formatted_body input
+      poll_updater.count_one_vote input, (error, response) ->
+        console.log "error: #{error}"
+        console.log "response: #{response}"
       expect(result).to.deep.equal(expected)
