@@ -64,7 +64,7 @@ describe "poll_creator unit test", ->
 
     it "should append a url_id field to the top level of object", ->
       result = poll_creator.add_id input
-      {url_id} = result
+      { url_id } = result
       url_id.should.exist
       # minimum length lowers chance of collision
       expect(url_id).to.have.length.above(10)
@@ -73,14 +73,15 @@ describe "poll_creator unit test", ->
   describe "save and retrieve poll", ->
 
     form =
-      question: "Should we go to Vegas?"
-      choices:
-        choice1: "Yes"
-        choice2: "No"
-        choice3: "Maybe"
-      options:
-        allow_multiple: true
-        require_name: false
+      poll_query:
+        question: "Should we go to Vegas?"
+        choices:
+          choice1: "Yes"
+          choice2: "No"
+          choice3: "Maybe"
+        options:
+          allow_multiple: true
+          require_name: false
     form_with_id = poll_creator.add_id form
 
     describe "save_poll_to_db", ->
@@ -92,7 +93,7 @@ describe "poll_creator unit test", ->
 
           describe "retrieve_poll", ->
             it "should return the queried object", (done) ->
-              {url_id} = saved_object
+              { url_id } = saved_object
               poll_creator.retrieve_poll { url_id: url_id }, (err, result) ->
                 expect(result).to.deep.equal(saved_object)
                 done()
