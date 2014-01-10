@@ -53,7 +53,7 @@ module.exports = class PollCreator extends Base
     choices = []
     for key, value of form_choices
       choices.push
-        choice_number: ++count
+        choice_number: count++
         choice: value
         voter_names: []
         num_votes: 0

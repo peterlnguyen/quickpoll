@@ -33,19 +33,19 @@ describe "poll_creator unit test", ->
       poll_results:
         choices: [
           {
-            choice_number: 1
+            choice_number: 0
             choice: "Yes"
             voter_names: []
             num_votes: 0
           },
           {
-            choice_number: 2
+            choice_number: 1
             choice: "No"
             voter_names: []
             num_votes: 0
           },
           {
-            choice_number: 3
+            choice_number: 2
             choice: "Maybe"
             voter_names: []
             num_votes: 0
@@ -88,6 +88,7 @@ describe "poll_creator unit test", ->
       it "should return the successfully saved object", (done) ->
         poll_creator.save_poll_to_db form_with_id, (err, res) ->
           saved_object = res[0]
+          should.not.exist(err)
           expect(saved_object).to.deep.equal(form_with_id)
           done()
 
@@ -95,6 +96,7 @@ describe "poll_creator unit test", ->
             it "should return the queried object", (done) ->
               { url_id } = saved_object
               poll_creator.retrieve_poll { url_id: url_id }, (err, result) ->
+                should.not.exist(err)
                 expect(result).to.deep.equal(saved_object)
                 done()
 
