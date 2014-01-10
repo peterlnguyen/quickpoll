@@ -21,14 +21,15 @@ describe "poll_creator unit test", ->
         # require_name intentionally omitted
         
     expected =
-      question: "Should we go to Vegas?"
-      choices:
-        choice1: "Yes"
-        choice2: "No"
-        choice3: "Maybe"
-      options:
-        allow_multiple: true
-        require_name: false
+      poll_query:
+        question: "Should we go to Vegas?"
+        choices:
+          choice1: "Yes"
+          choice2: "No"
+          choice3: "Maybe"
+        options:
+          allow_multiple: true
+          require_name: false
 
     it "should extrapolate and format form data", ->
       result = poll_creator.get_formatted_body input

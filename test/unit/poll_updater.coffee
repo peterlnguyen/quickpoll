@@ -2,7 +2,7 @@ chai = require "chai"
 expect = chai.expect
 should = require "should"
 
-PollUpdator = require "../../controllers/poll_creator"
+PollUpdater = require "../../controllers/poll_updater"
 poll_updater = new PollUpdater
 
 
@@ -16,9 +16,6 @@ describe "poll_updater unit test", ->
       choice_number: 1
       name: "Michael"
       url_id: 15
-      req_res:
-        req:
-        res:
 
     it "should extrapolate and format form data", ->
       poll_updater.count_one_vote input, (error, response) ->
