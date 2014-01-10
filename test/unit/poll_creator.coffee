@@ -30,6 +30,27 @@ describe "poll_creator unit test", ->
         options:
           allow_multiple: true
           require_name: false
+      poll_results:
+        choices: [
+          {
+            choice_number: 1
+            choice: "Yes"
+            voter_names: []
+            num_votes: 0
+          },
+          {
+            choice_number: 2
+            choice: "No"
+            voter_names: []
+            num_votes: 0
+          },
+          {
+            choice_number: 3
+            choice: "Maybe"
+            voter_names: []
+            num_votes: 0
+          }
+        ]
 
     it "should extrapolate and format form data", ->
       result = poll_creator.get_formatted_body input

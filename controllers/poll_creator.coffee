@@ -45,44 +45,34 @@ module.exports = class PollCreator extends Base
     form.url_id = form_id
     form
 
+  format_choice_object: (form_choices) ->
+    count = 0
+    formatted_choices = {}
+    for key, value of form_choices
+      formatted_choices.push
+        choice_number: ++count
+        choice: value
+        voter_names: []
+        num_votes: 0
+    formatted_choiceis
+
   get_formatted_body: (req) ->
     body = req.body
     allow_multiple = if body.allow_multiple then true else false
     require_name = if body.require_name then true else false
 
-    {
-      poll_query:
-        question: body.question
-        choices:
-          choice1: body.choice1
-          choice2: body.choice2
-          choice3: body.choice3
-        options:
-          allow_multiple: allow_multiple
-          require_name: require_name
+      {
+        poll_query:
+          question: body.question
+          choices:
+            choice1: body.choice1
+            choice2: body.choice2
+            choice3: body.choice3
+          options:
+            allow_multiple: allow_multiple
+            require_name: require_name
 
-      poll_results:
-        choices: [
-          {
-            choice_number: 1
-            choice: body.choice1
-            voter_names: []
-            num_votes: 0
-          },
-          {
-            choice_number: 2
-            choice: body.choice2
-            voter_names: []
-            num_votes: 0
-          },
-          {
-            choice_number: 3
-            choice: body.choice3
-            voter_names: []
-            num_votes: 0
-          }
-        ]
-    }
+      }
 
   save_poll_to_db: (form, callback) ->
     @mongo.insert(form, callback)
