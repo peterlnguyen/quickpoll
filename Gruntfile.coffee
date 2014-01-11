@@ -30,17 +30,15 @@ module.exports = (grunt) ->
         "controllers/*.coffee", "models/*.coffee", "views/*.coffee",
         "routes/*.coffee",
       ]
-      tests:
-        files:
-          src: [
-          ]
-        options:
-          arrow_spacing: true
-          colon_assignment_spacing: 0
-          missing_fat_arrows: "warn",
-          max_line_length: 1000
+      options:
+        arrow_spacing:
+          level: "error"
+        missing_fat_arrows:
+          level: "warn"
+        max_line_length:
+          level: "warn"
 
-  grunt.registerTask "default", [ "coffeelint", "concat", "uglify" ]
+  grunt.registerTask "default", [ "coffeelint" ]
 
 
 
