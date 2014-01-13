@@ -25,9 +25,10 @@ app.use(express.compress())
 app.use express.static(path.join(__dirname, "public"))
 
 # development only
-app.use express.errorHandler()  if "development" is app.get("env")
+app.use express.errorHandler() if "development" is app.get("env")
 app.get "/", routes.index
 app.post "/createForm", routes.create_form
+app.post "/submitVote", routes.submit_vote
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
 
