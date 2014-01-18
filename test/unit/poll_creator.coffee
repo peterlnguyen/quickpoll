@@ -93,7 +93,6 @@ describe "poll_creator unit test", ->
                 done()
 
   describe "create_poll_results_object", ->
-    console.log "here!"
     input = ["Hello", "World", "!"]
     expected_results =
       choices: [

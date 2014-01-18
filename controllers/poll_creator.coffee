@@ -48,7 +48,6 @@ module.exports = class PollCreator extends Base
   # TODO: unit test
   # converts a list of choices into object containing results for each choice
   create_poll_results_object: (form_choices) ->
-    console.log "form choices: #{JSON.stringify form_choices}"
     count = 0
     poll_results = {}
     choices = []
@@ -65,8 +64,6 @@ module.exports = class PollCreator extends Base
     body = req.body
     allow_multiple = if body.allow_multiple then true else false
     require_name = if body.require_name then true else false
-
-    console.log "req.body: #{JSON.stringify req.body}"
 
     poll =
       poll_query:
