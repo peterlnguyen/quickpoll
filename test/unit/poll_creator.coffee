@@ -92,6 +92,35 @@ describe "poll_creator unit test", ->
                 expect(result).to.deep.equal(saved_object)
                 done()
 
+  describe "create_poll_results_object", ->
+    console.log "here!"
+    input = ["Hello", "World", "!"]
+    expected_results =
+      choices: [
+        {
+          choice_number: 0
+          choice: "Hello"
+          voter_names: []
+          num_votes: 0
+        },
+        {
+          choice_number: 1
+          choice: "World"
+          voter_names: []
+          num_votes: 0
+        },
+        {
+          choice_number: 2
+          choice: "!"
+          voter_names: []
+          num_votes: 0
+        }
+      ]
+
+    it "should return a formatted poll_results object", ->
+      poll_results = poll_creator.create_poll_results_object input
+      expect(poll_results).to.deep.equal(expected_results)
+
   # @todo
   describe "render_poll", ->
 
