@@ -47,14 +47,15 @@ module.exports = class PollCreator extends Base
 
   # TODO: unit test
   # converts a list of choices into object containing results for each choice
-  generate_poll_results: (form_choices) ->
+  create_poll_results_object: (form_choices) ->
+    console.log "form choices: #{JSON.stringify form_choices}"
     count = 0
     poll_results = {}
     choices = []
-    for key, value of form_choices
+    for choice in form_choices
       choices.push
         choice_number: count++
-        choice: value
+        choice: choice
         voter_names: []
         num_votes: 0
     poll_results.choices = choices
@@ -65,21 +66,16 @@ module.exports = class PollCreator extends Base
     allow_multiple = if body.allow_multiple then true else false
     require_name = if body.require_name then true else false
 
+    console.log "req.body: #{JSON.stringify req.body}"
+
     poll =
       poll_query:
         question: body.question
-        choices:
-          choice1: body.choice1
-          choice2: body.choice2
-          choice3: body.choice3
+        choices: body.choices
         options:
           allow_multiple: allow_multiple
           require_name: require_name
-    # FIXME: pass choices as a proper list
-    poll.poll_results = @generate_poll_results
-      choice1: body.choice1
-      choice2: body.choice2
-      choice3: body.choice3
+    poll.poll_results = @create_poll_results_object body.choices
     poll
 
   save_poll_to_db: (form, callback) ->

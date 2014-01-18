@@ -14,19 +14,14 @@ describe "poll_creator unit test", ->
     input =
       body:
         question: "Should we go to Vegas?"
-        choice1: "Yes"
-        choice2: "No"
-        choice3: "Maybe"
+        choices: ["Yes", "No", "Maybe"]
         allow_multiple: "on"
         # require_name intentionally omitted
         
     expected =
       poll_query:
         question: "Should we go to Vegas?"
-        choices:
-          choice1: "Yes"
-          choice2: "No"
-          choice3: "Maybe"
+        choices: ["Yes", "No", "Maybe"]
         options:
           allow_multiple: true
           require_name: false
@@ -75,10 +70,7 @@ describe "poll_creator unit test", ->
     form =
       poll_query:
         question: "Should we go to Vegas?"
-        choices:
-          choice1: "Yes"
-          choice2: "No"
-          choice3: "Maybe"
+        choices: ["Yes", "No", "Maybe"]
         options:
           allow_multiple: true
           require_name: false

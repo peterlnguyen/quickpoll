@@ -1,21 +1,24 @@
 extends layout
 
 block content
-  h1 = title
+  h1=title
 
   form(method="POST", action="createForm", id="pollForm")
     div
       label(for="question") Question:
       input(type="text", name="question", id="question")
     div
-      label(for="choice1") Choice 1:
-      input(type="text", name="choice1", id="choice1")
+      label Choice 1:
+      input(type="text", name="choices", id="choice1")
     div
-      label(for="choice2") Choice 2:
-      input(type="text", name="choice2", id="choice2")
+      label Choice 2:
+      input(type="text", name="choices", id="choice2")
     div
-      label(for="choice3") Choice 3:
-      input(type="text", name="choice3", id="choice3")
+      label Choice 3:
+      input(type="text", name="choices", id="choice3")
+    div
+      label Choice 4:
+      input(type="text", name="choices", id="choice4")
     div
       p Allow multiple answers? 
         input(type="checkbox", name="allow_multiple", id="allow_multiple")

@@ -16,9 +16,7 @@ describe "insert_and_update integration, tests for poll_updater unit test", ->
     form =
       body:
         question: "Should we go to Vegas?"
-        choice1: "Yes"
-        choice2: "No"
-        choice3: "Maybe"
+        choices: ["Yes", "No", "Maybe"]
         allow_multiple: true
         require_name: false
     formatted_form = poll_creator.get_formatted_body form
