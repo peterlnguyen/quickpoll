@@ -12,11 +12,16 @@ module.exports = class PollUpdater
   process_update: (req_res) ->
     { req, res } = req_res
 
-    update = @get_formatted_body req
+    update = @get_formatted_body req_res
 
-  get_formatted_body: (req) ->
+#    @count_one_vote choice_number:
+#      name:
+
+  get_formatted_body: ({ req, res }) ->
     body = req.body
+    console.log JSON.stringify body
     # TODO: need to decide body format for sending votes
+    Render.render_index res
 
   count_one_vote: ({ choice_number, name, url_id }, callback) ->
     @mongo.update { url_id: url_id, "poll_results.choices.choice_number": choice_number },

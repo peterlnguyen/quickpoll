@@ -38,7 +38,7 @@ module.exports = class PollCreator extends Base
 
   render_poll: (req_res, poll) ->
     {req, res} = req_res
-    Render.render_poll "poll", res
+    Render.render_poll poll, res
 
   add_id: (form) ->
     form_id = @generate_random 15
