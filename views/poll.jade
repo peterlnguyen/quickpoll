@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  p #{JSON.stringify(poll)}
+
+  form(method="POST", action="submitVote", id="submitVote")
+    div(name="choices")
+      p Question: #{poll.question}
+    - for choice in poll.choices
+      div
+        input(type="checkbox", name="#{choice}", id="#{choice}")
+        p #{choice}
+    div
+    - if(poll.options.require_name == true)
+        p Please enter your name (required):
+        input(type="text", name="name", id="name") 
+    - else
+        p Please enter your name (optional):
+        input(type="text", name="name", id="name") 
+      input(type="hidden", name="url_id", value:"#{url_id}")
+    div
+      input(type="submit", class="btn", id="updateSubmit", value="Submit") 
