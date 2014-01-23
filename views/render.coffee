@@ -14,6 +14,10 @@ module.exports = class Render
       poll: poll.poll_query
       url_id: poll.url_id
 
+  @render_results: (results, res) ->
+    res.render "index"
+    title: "Poll Results"
+
   @render_index: (res) ->
     res.render "index",
       title: "Here's the index!"

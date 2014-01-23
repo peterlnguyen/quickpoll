@@ -9,25 +9,24 @@ module.exports = class PollUpdater
     @mongo = new Mongo
 
   # TODO
-  process_update: (req_res) ->
-    { req, res } = req_res
+  process_update: ({ req, res }) ->
 
-    update = @get_formatted_body req_res
+    update = @get_formatted_body { req, res }
 
 #    @count_one_vote choice_number:
 #      name:
 
   get_formatted_body: ({ req, res }) ->
-    body = req.body
-    console.log JSON.stringify body
+    poll = req.body
     # TODO: need to decide body format for sending votes
-    Render.render_index res
+    # @count_many_votes()
+    Render.render_results poll, res
 
   count_one_vote: ({ choice_number, name, url_id }, callback) ->
     @mongo.update { url_id: url_id, "poll_results.choices.choice_number": choice_number },
       { $push: { "poll_results.choices.$.voter_names": name } }, callback
 
   # TODO
-  count_many_votes: ({ votes_list, url_id }, req_res) ->
-    { req, res } = req_res
+  count_many_votes: ({ votes_list, url_id }, { req, res }) ->
+    # do nothing
 
