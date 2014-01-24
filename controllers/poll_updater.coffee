@@ -18,9 +18,20 @@ module.exports = class PollUpdater
 
   get_formatted_body: ({ req, res }) ->
     poll = req.body
+    {url_id} = poll
     # TODO: need to decide body format for sending votes
-    # @count_many_votes()
-    Render.render_results poll, res
+    # TODO: @count_many_votes()
+    console.log "req.bod: ", req.body
+
+    @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
+      if err
+        console.log "Retrieve poll error: #{err}"
+        Render.render_error err, retrieve_res
+      else
+        Render.render_results retrieve_res, res
+
+  retrieve_poll: (query, callback) ->
+    @mongo.find_one(query, callback)
 
   count_one_vote: ({ choice_number, name, url_id }, callback) ->
     @mongo.update { url_id: url_id, "poll_results.choices.choice_number": choice_number },
