@@ -37,7 +37,7 @@ module.exports = class PollUpdater
     @mongo.update { url_id: url_id, "poll_results.choices.choice_number": choice_number },
       { $push: { "poll_results.choices.$.voter_names": name } }, callback
 
-  # TODO
+  # TODO: need to check for all form items EXCEPT "name" and "url_id", rest are choices
   count_many_votes: ({ votes_list, url_id }, { req, res }) ->
     # do nothing
 
