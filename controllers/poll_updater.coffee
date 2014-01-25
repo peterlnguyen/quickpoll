@@ -21,7 +21,6 @@ module.exports = class PollUpdater
     for value, key of votes
       if value not in ["name", "url_id"]
         choices.push value
-    console.log choices
     choices
 
   get_formatted_body: ({ req, res }) ->
@@ -33,11 +32,12 @@ module.exports = class PollUpdater
     choices = @votes_to_list poll
     console.log "req.bod: ", req.body
 
-    @count_vote_list { choices: choices, url_id: url_id }, (error, callback) =>
+    @count_vote_list { choices: choices, url_id: url_id }, (error, count_vote_response) =>
       if error
         console.error "Error in count_vote_list: ", error
         Render.render_error error, res
       else
+        console.log "done counting votes, no error.  callback: ", count_vote_response
         @retrieve_poll { url_id: url_id }, (err, retrieve_result) =>
           if err
             console.log "Retrieve poll error: #{err}"

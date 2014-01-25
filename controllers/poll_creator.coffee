@@ -11,8 +11,7 @@ module.exports = class PollCreator extends Base
     super()
 
   # equivalent to your "main" function in creating a poll
-  process_form: (req_res) ->
-    {req, res} = req_res
+  process_form: ({ req, res }) ->
     form = @get_formatted_body req
     form_with_id = @add_id form
 
@@ -22,10 +21,9 @@ module.exports = class PollCreator extends Base
         console.error "Save poll error: #{err}"
         Render.render_error err, save_res
       else
-        @retrieve_and_render save_res, req_res
+        @retrieve_and_render save_res, { req, res }
 
-  retrieve_and_render: (retrieve_query, req_res) ->
-    {req, res} = req_res
+  retrieve_and_render: (retrieve_query, { req, res }) ->
     # immediately parse custom url_id to retrieve poll
     url_id = retrieve_query[0].url_id
 
@@ -34,10 +32,9 @@ module.exports = class PollCreator extends Base
         console.error "Retrieve poll error: #{err}"
         Render.render_error err, retrieve_res
       else
-        @render_poll req_res, retrieve_res
+        @render_poll { req, res }, retrieve_res
 
-  render_poll: (req_res, poll) ->
-    {req, res} = req_res
+  render_poll: ({req, res}, poll) ->
     Render.render_poll poll, res
 
   add_id: (form) ->
