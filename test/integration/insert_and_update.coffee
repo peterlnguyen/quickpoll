@@ -42,29 +42,61 @@ describe "insert_and_update integration, tests for poll_updater unit test", ->
 
                 describe "count_vote_list", ->
 
-                  push_query_jason = poll_updater.generate_push_query ["Yes", "Maybe"], "Jason"
-                  push_query_bob = poll_updater.generate_push_query ["Yes", "Maybe"], "Bob"
+                  req_bob =
+                    body:
+                      "Yes": "on"
+                      "No": "on"
+                      "Maybe": "on"
+                      url_id: url_id
+                      name: "Bob"
+
+                  req_jason =
+                    body:
+                      "Yes": "on"
+                      "No": "on"
+                      "Maybe": "on"
+                      url_id: url_id
+                      name: "Jason"
+
+                  { update_query } = poll_updater.get_query_params req_jason
 
                   it "should submit vote and return success", (done) ->
-                    poll_updater.count_vote_list { push_query: push_query_jason, url_id: url_id },
+                    poll_updater.count_vote_list { update_query: update_query, url_id: url_id },
                       (update_error, update_response) ->
                         should.not.exist(update_error)
                         update_response.should.equal(1)
                         done()
 
-                        it "should submit vote and return success", (done) ->
-                          poll_updater.count_vote_list { push_query: push_query_bob, url_id: url_id },
-                            (update_error, update_response) ->
-                              should.not.exist(update_error)
-                              update_response.should.equal(1)
+                        describe "retrieve_poll", ->
+                          it "should return the newly updated object", (done) ->
+                            poll_updater.retrieve_poll { url_id }, (updated_error, updated_result) ->
+                              #console.log "results: ", updated_result
+                              should.exist(updated_result)
+                              should.not.exist(updated_error)
+                              assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Yes"].voter_names
+                              assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Maybe"].voter_names
                               done()
 
-                              describe "retrieve_poll", ->
-                                it "should return the newly updated object", (done) ->
-                                  poll_creator.retrieve_poll { url_id: url_id }, (updated_error, updated_result) ->
-                                    should.not.exist(updated_error)
-                                    assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Yes"].voter_names
-                                    assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Maybe"].voter_names
-                                    done()
+#                        { update_query } = poll_updater.get_query_params req_bob
+#                        #console.log update_query
+#
+#                        describe "submitting another vote", ->
+#                          it "should submit vote and return success", (done) ->
+#                            poll_updater.count_vote_list { update_query: update_query, url_id: url_id },
+#                              (update_error, update_response) ->
+#                                #console.log "updated response: "
+#                                should.not.exist(update_error)
+#                                update_response.should.equal(1)
+#                                done()
+#
+#                                describe "retrieve_poll", ->
+#                                  it "should return the newly updated object", (done) ->
+#                                    poll_updater.retrieve_poll { url_id: url_id }, (updated_error, updated_result) ->
+#                                      #console.log "results: ", updated_result
+#                                      should.exist(updated_result)
+#                                      should.not.exist(updated_error)
+#                                      assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Yes"].voter_names
+#                                      assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Maybe"].voter_names
+#                                      done()
 
 

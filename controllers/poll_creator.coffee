@@ -21,6 +21,7 @@ module.exports = class PollCreator extends Base
         console.error "Save poll error: #{err}"
         Render.render_error err, save_res
       else
+        console.log "saved poll: ", save_res
         @retrieve_and_render save_res, { req, res }
 
   retrieve_and_render: (retrieve_query, { req, res }) ->

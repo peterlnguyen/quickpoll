@@ -24,4 +24,28 @@ describe "poll_updater unit test", ->
       result = poll_updater.votes_to_list input
       expect(result).to.deep.equal(expected)
 
+  describe "get_query_params, generate_push_query", ->
 
+    input =
+      body:
+        first_choice: "on"
+        second_choice: "on"
+        third_choice: "on"
+        url_id: "fake_id"
+        name: "John Doe"
+    
+    expected =
+      update_query:
+        $push:
+          "poll_results.choices.first_choice.voter_names": "John Doe"
+          "poll_results.choices.second_choice.voter_names": "John Doe"
+          "poll_results.choices.third_choice.voter_names": "John Doe"
+        $inc:
+          "poll_results.choices.first_choice.count": 1
+          "poll_results.choices.second_choice.count": 1
+          "poll_results.choices.third_choice.count": 1
+      url_id: "fake_id"
+
+    it "should return an object with push_query and url_id", ->
+      result = poll_updater.get_query_params input
+      expect(result).to.deep.equal(expected)
