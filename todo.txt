@@ -1,3 +1,4 @@
+- handle situation when name is not required, create_update_query, name ?= ...
 - general refactoring in poll_updater
   - separate nested callbacks in count_vote_list in poll_updater
 - create query_creator function for incrementing vote count
