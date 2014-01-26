@@ -10,11 +10,7 @@ module.exports = class PollUpdater
 
   # TODO: separate nested callbacks
   process_update: ({ req, res }) ->
-    poll = req.body
-    console.log poll
-    { url_id, name } = poll
-    choices = @votes_to_list poll
-    push_query = @create_update_query choices, name
+    { push_query, url_id } = @get_query_params req
 
     # FIXME: need to modularize this, in case name is not required
     @count_vote_list { push_query: push_query, url_id: url_id },
@@ -23,6 +19,8 @@ module.exports = class PollUpdater
           console.error "Error in count_vote_list: ", count_error
           Render.render_error count_error, res
         else
+
+          #@retrieve_poll_with_callbacks url_id
           @retrieve_poll { url_id: url_id }, (retrieve_error, retrieve_result) ->
             if retrieve_error
               console.log "Retrieve poll error: ", retrieve_error
@@ -30,9 +28,25 @@ module.exports = class PollUpdater
             else
               { poll_results } = retrieve_result
               Render.render_results poll_results, res
+  
+  retrieve_poll_updater: ({ url_id }) ->
+    if retrieve_error
+      console.log "Retrieve poll error: ", retrieve_error
+      Render.render_error retrieve_error, res
+    else
+      { poll_results } = retrieve_result
+      Render.render_results poll_results, res
 
   retrieve_poll: (query, callback) ->
     @mongo.find_one(query, callback)
+
+  # brings together necessary data to generate_push_query
+  get_query_params: ({ req }) ->
+    poll = req.body
+    { url_id, name } = poll
+    choices = @votes_to_list poll
+    push_query = @generate_push_query choices, name
+    { push_query, url_id }
 
   # extracts votes from object literal and converts to list for mongo update argument
   votes_to_list: (votes) ->
@@ -42,7 +56,8 @@ module.exports = class PollUpdater
         choices.push value
     choices
 
-  create_update_query: (choice_list, name) ->
+  # generates it by iterating through choice_list
+  generate_push_query: (choice_list, name) ->
     # FIXME: placeholder
     if !name then name = "Bob"
     push_query = {}

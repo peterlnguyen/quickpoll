@@ -42,8 +42,8 @@ describe "insert_and_update integration, tests for poll_updater unit test", ->
 
                 describe "count_vote_list", ->
 
-                  push_query_jason = poll_updater.create_update_query ["Yes", "Maybe"], "Jason"
-                  push_query_bob = poll_updater.create_update_query ["Yes", "Maybe"], "Bob"
+                  push_query_jason = poll_updater.generate_push_query ["Yes", "Maybe"], "Jason"
+                  push_query_bob = poll_updater.generate_push_query ["Yes", "Maybe"], "Bob"
 
                   it "should submit vote and return success", (done) ->
                     poll_updater.count_vote_list { push_query: push_query_jason, url_id: url_id },
