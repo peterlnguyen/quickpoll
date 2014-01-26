@@ -1,6 +1,7 @@
 chai = require "chai"
 expect = chai.expect
 should = require "should"
+assert = require "assert"
 
 PollUpdater = require "../../controllers/poll_updater"
 poll_updater = new PollUpdater
@@ -39,24 +40,31 @@ describe "insert_and_update integration, tests for poll_updater unit test", ->
                 expect(retrieve_result).to.deep.equal(saved_object)
                 done()
 
-                describe "count_one_vote", ->
+                describe "count_vote_list", ->
 
-                  input =
-                    choice_number: 1
-                    name: "Jason"
-                    url_id: url_id
+                  push_query_jason = poll_updater.create_update_query ["Yes", "Maybe"], "Jason"
+                  push_query_bob = poll_updater.create_update_query ["Yes", "Maybe"], "Bob"
 
                   it "should submit vote and return success", (done) ->
-                    poll_updater.count_one_vote input, (update_error, update_response) ->
-                      should.not.exist(update_error)
-                      update_response.should.equal(1)
-                      done()
+                    poll_updater.count_vote_list { push_query: push_query_jason, url_id: url_id },
+                      (update_error, update_response) ->
+                        should.not.exist(update_error)
+                        update_response.should.equal(1)
+                        done()
 
-                      describe "retrieve_poll", ->
-                        it "should return the newly updated object", (done) ->
-                          poll_creator.retrieve_poll { url_id: url_id }, (updated_error, updated_result) ->
-                            should.not.exist(updated_error)
-                            expect(updated_result.poll_results.choices[1].voter_names).to.contain("Jason")
-                            done()
+                        it "should submit vote and return success", (done) ->
+                          poll_updater.count_vote_list { push_query: push_query_bob, url_id: url_id },
+                            (update_error, update_response) ->
+                              should.not.exist(update_error)
+                              update_response.should.equal(1)
+                              done()
+
+                              describe "retrieve_poll", ->
+                                it "should return the newly updated object", (done) ->
+                                  poll_creator.retrieve_poll { url_id: url_id }, (updated_error, updated_result) ->
+                                    should.not.exist(updated_error)
+                                    assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Yes"].voter_names
+                                    assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Maybe"].voter_names
+                                    done()
 
 
