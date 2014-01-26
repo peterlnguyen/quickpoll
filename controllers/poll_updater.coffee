@@ -48,6 +48,22 @@ module.exports = class PollUpdater
         choices.push value
     choices
 
+#  create_update_query: (choice_list) ->
+#    poll_results.choices.
+#
+#  count_vote_list: ({ choices, name, url_id }, callback) ->
+#    @mongo.update { url_id: url_id, "poll_results.choices.choice": choices },
+#      { $push: { "poll_results.choices.$.voter_names": name } }, callback
+
   count_vote_list: ({ choices, name, url_id }, callback) ->
     @mongo.update { url_id: url_id, "poll_results.choices.choice": choices },
       { $push: { "poll_results.choices.$.voter_names": name } }, callback
+
+
+
+
+
+
+
+
+

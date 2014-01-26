@@ -26,26 +26,22 @@ describe "poll_creator unit test", ->
           allow_multiple: true
           require_name: false
       poll_results:
-        choices: [
-          {
+        choices:
+          "Yes":
             choice_number: 0
             choice: "Yes"
             voter_names: []
             num_votes: 0
-          },
-          {
+          "No":
             choice_number: 1
             choice: "No"
             voter_names: []
             num_votes: 0
-          },
-          {
+          "Maybe":
             choice_number: 2
             choice: "Maybe"
             voter_names: []
             num_votes: 0
-          }
-        ]
 
     it "should extrapolate and format form data", ->
       result = poll_creator.get_formatted_body input
@@ -95,26 +91,22 @@ describe "poll_creator unit test", ->
   describe "create_poll_results_object", ->
     input = ["Hello", "World", "!"]
     expected_results =
-      choices: [
-        {
+      choices:
+        "Hello":
           choice_number: 0
           choice: "Hello"
           voter_names: []
           num_votes: 0
-        },
-        {
+        "World":
           choice_number: 1
           choice: "World"
           voter_names: []
           num_votes: 0
-        },
-        {
+        "!":
           choice_number: 2
           choice: "!"
           voter_names: []
           num_votes: 0
-        }
-      ]
 
     it "should return a formatted poll_results object", ->
       poll_results = poll_creator.create_poll_results_object input
