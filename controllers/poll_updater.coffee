@@ -20,18 +20,13 @@ module.exports = class PollUpdater
           console.error "Error in count_vote_list: ", count_error
           Render.render_error count_error, res
         else
-          console.log "about to retrieve poll"
-          console.log "count_vote_response: ", count_vote_response
-          console.log "id: ", url_id
-
           @retrieve_poll { url_id: url_id }, (retrieve_error, retrieve_result) ->
-            console.log "retrieves poll", retrieve_result
             if retrieve_error
               console.log "Retrieve poll error: ", retrieve_error
               Render.render_error retrieve_error, res
             else
-              { poll_results } = retrieve_result
               console.log "poll results: ", retrieve_result
+              { poll_results } = retrieve_result
               Render.render_results poll_results, res
 
   retrieve_poll: (query, callback) ->
@@ -74,10 +69,8 @@ module.exports = class PollUpdater
     push_query
 
   count_vote_list: ({ update_query, url_id }, callback) ->
-#    console.log "update query in count vote: ", update_query
-#    console.log "my id: ", url_id
     @mongo.update { url_id: url_id },
-      { update_query }, callback
+      update_query, callback
 
 
 

@@ -1,3 +1,5 @@
+- fix this bad retrieval problem... i suspect it is the count_vote_list
+  overwriting the poll
 - handle situation when name is not required, create_update_query, name ?= ...
 - general refactoring in poll_updater
   - separate nested callbacks in count_vote_list in poll_updater

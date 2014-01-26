@@ -45,7 +45,7 @@ module.exports = class Mongo
 
   find_one: (query, callback) ->
     # findOne() works, but find() returns empty set... strange
-    @coll.find(query, callback)
+    @coll.findOne(query, callback)
 
   update: (selector, document, callback) ->
     @coll.update(selector, document, callback)

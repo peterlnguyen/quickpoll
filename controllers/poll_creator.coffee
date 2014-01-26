@@ -33,6 +33,7 @@ module.exports = class PollCreator extends Base
         console.error "Retrieve poll error: #{err}"
         Render.render_error err, retrieve_res
       else
+        console.log "retrieving this stupid poll: ", retrieve_res
         @render_poll { req, res }, retrieve_res
 
   render_poll: ({req, res}, poll) ->
