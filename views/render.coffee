@@ -8,15 +8,16 @@ module.exports = class Render
       title: err
   
   @render_poll: (poll, res) ->
+    # FIXME: temporary fix to remove the ids and other sensitive data
     res.render "poll",
       title: "Poll Rendered!"
-      # FIXME: temporary fix to remove the ids and other sensitive data
       poll: poll.poll_query
       url_id: poll.url_id
 
   @render_results: (results, res) ->
-    res.render "index"
-    title: "Poll Results"
+    res.render "results",
+      title: "Poll Results"
+      results: results
 
   @render_index: (res) ->
     res.render "index",
