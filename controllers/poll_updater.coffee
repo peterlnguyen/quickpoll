@@ -20,7 +20,6 @@ module.exports = class PollUpdater
           Render.render_error count_error, res
         else
 
-          #@retrieve_poll_with_callbacks url_id
           @retrieve_poll { url_id: url_id }, (retrieve_error, retrieve_result) ->
             if retrieve_error
               console.log "Retrieve poll error: ", retrieve_error
@@ -28,14 +27,6 @@ module.exports = class PollUpdater
             else
               { poll_results } = retrieve_result
               Render.render_results poll_results, res
-  
-  retrieve_poll_updater: ({ url_id }) ->
-    if retrieve_error
-      console.log "Retrieve poll error: ", retrieve_error
-      Render.render_error retrieve_error, res
-    else
-      { poll_results } = retrieve_result
-      Render.render_results poll_results, res
 
   retrieve_poll: (query, callback) ->
     @mongo.find_one(query, callback)
