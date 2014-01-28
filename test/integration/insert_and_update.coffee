@@ -7,7 +7,8 @@ PollUpdater = require "../../controllers/poll_updater"
 poll_updater = new PollUpdater
 PollCreator = require "../../controllers/poll_creator"
 poll_creator = new PollCreator
-
+PollRetriever = require "../../controllers/poll_retriever"
+poll_retriever = new PollRetriever
 
 
 describe "insert_and_update integration, tests for poll_updater unit test", ->
@@ -33,9 +34,8 @@ describe "insert_and_update integration, tests for poll_updater unit test", ->
 
           describe "retrieve_poll", ->
             it "should return the queried object", (done) ->
-              # unique identifier
               { url_id } = saved_object
-              poll_creator.retrieve_poll { url_id: url_id }, (retrieve_error, retrieve_result) ->
+              poll_retriever.retrieve_poll { url_id }, (retrieve_error, retrieve_result) ->
                 should.not.exist(retrieve_error)
                 expect(retrieve_result).to.deep.equal(saved_object)
                 done()
@@ -77,7 +77,7 @@ describe "insert_and_update integration, tests for poll_updater unit test", ->
 
                                 describe "retrieve_poll", ->
                                   it "should return the newly updated object", (done) ->
-                                    poll_updater.retrieve_poll { url_id: url_id }, (updated_error, updated_result) ->
+                                    poll_retriever.retrieve_poll { url_id: url_id }, (updated_error, updated_result) ->
                                       should.exist(updated_result)
                                       should.not.exist(updated_error)
 

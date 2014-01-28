@@ -80,14 +80,6 @@ describe "poll_creator unit test", ->
           expect(saved_object).to.deep.equal(form_with_id)
           done()
 
-          describe "retrieve_poll", ->
-            it "should return the queried object", (done) ->
-              { url_id } = saved_object
-              poll_creator.retrieve_poll { url_id: url_id }, (err, result) ->
-                should.not.exist(err)
-                expect(result).to.deep.equal(saved_object)
-                done()
-
   describe "create_poll_results_object", ->
     input = ["Hello", "World", "!"]
     expected_results =
