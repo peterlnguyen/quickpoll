@@ -28,6 +28,10 @@ app.use express.static(path.join(__dirname, "public"))
 app.use express.errorHandler() if "development" is app.get("env")
 
 
+# one of these need to be in front
+app.post "/createForm", routes.create_form
+app.post "/submitVote", routes.submit_vote
+
 app.post "/polls/submitVote", routes.submit_vote
 app.post "/poll/submitVote", routes.submit_vote
 
@@ -36,8 +40,6 @@ app.all "/polls/:url_id", routes.render_poll
 #app.get "/poll/:url_id/:poll_question", (req, res, next) -> next()
 #app.get "/polls/:url_id/:poll_question", routes.render_poll
 
-app.post "/createForm", routes.create_form
-app.post "/submitVote", routes.submit_vote
 app.get "/", routes.index
 
 http.createServer(app).listen app.get("port"), ->
