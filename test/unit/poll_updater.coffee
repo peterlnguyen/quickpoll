@@ -24,7 +24,7 @@ describe "poll_updater unit test", ->
       result = poll_updater.votes_to_list input
       expect(result).to.deep.equal(expected)
 
-  describe "get_query_params, generate_push_query", ->
+  describe "get_query_params, generate_push_query, generate_increment_count_query", ->
 
     input =
       body:
