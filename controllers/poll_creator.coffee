@@ -24,7 +24,7 @@ module.exports = class PollCreator extends Base
         Render.render_error err, save_res
       else
         url_id = save_res[0].url_id
-        @poll_retriever.retrieve_and_render_query { url_id }, { res }
+        @poll_retriever.retrieve_and_render_query { url_id, res }
 
   add_id: (form) ->
     form_id = @generate_random 20

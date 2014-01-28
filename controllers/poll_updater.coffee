@@ -16,13 +16,13 @@ module.exports = class PollUpdater
     { update_query, url_id } = @get_query_params req
 
     # FIXME: need to modularize this, in case name is not required
-    @count_vote_list { update_query: update_query, url_id: url_id },
+    @count_vote_list { update_query, url_id },
       (count_error, count_vote_response) =>
         if count_error
           console.error "Error in count_vote_list: ", count_error
           Render.render_error count_error, res
         else
-          @poll_retriever.retrieve_and_render_result { url_id: url_id }, { res }
+          @poll_retriever.retrieve_and_render_result { url_id, res }
 
   # brings together necessary data to update the vote
   get_query_params: (req) ->

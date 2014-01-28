@@ -1,2 +1,2 @@
-- general refactoring in poll_updater
+- refactored into poll_retrieval, now hardcoded stuff makes integration testing difficult
 - create link pathing to generate results page
