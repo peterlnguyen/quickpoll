@@ -1,4 +1,5 @@
 Base = require "./base"
+PollRetriever = require "./poll_retriever"
 Render = require "../views/render"
 Mongo = require "../models/mongo_connection"
 
@@ -8,11 +9,11 @@ module.exports = class PollCreator extends Base
 
   constructor: ->
     @mongo = new Mongo
+    @poll_retriever = new PollRetriever
     super()
 
   # equivalent to your "main" function in creating a poll
-  process_form: (req_res) ->
-    {req, res} = req_res
+  process_form: ({ req, res }) ->
     form = @get_formatted_body req
     form_with_id = @add_id form
 
@@ -22,26 +23,11 @@ module.exports = class PollCreator extends Base
         console.error "Save poll error: #{err}"
         Render.render_error err, save_res
       else
-        @retrieve_and_render save_res, req_res
-
-  retrieve_and_render: (retrieve_query, req_res) ->
-    {req, res} = req_res
-    # immediately parse custom url_id to retrieve poll
-    url_id = retrieve_query[0].url_id
-
-    @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
-      if err
-        console.error "Retrieve poll error: #{err}"
-        Render.render_error err, retrieve_res
-      else
-        @render_poll req_res, retrieve_res
-
-  render_poll: (req_res, poll) ->
-    {req, res} = req_res
-    Render.render_poll poll, res
+        url_id = save_res[0].url_id
+        @poll_retriever.retrieve_and_render_query { url_id, res }
 
   add_id: (form) ->
-    form_id = @generate_random 15
+    form_id = @generate_random 20
     form.url_id = form_id
     form
 
@@ -50,13 +36,13 @@ module.exports = class PollCreator extends Base
   create_poll_results_object: (form_choices) ->
     count = 0
     poll_results = {}
-    choices = []
+    choices = {}
     for choice in form_choices
-      choices.push
+      choices[choice] =
         choice_number: count++
         choice: choice
         voter_names: []
-        num_votes: 0
+        count: 0
     poll_results.choices = choices
     poll_results
 
@@ -77,7 +63,3 @@ module.exports = class PollCreator extends Base
 
   save_poll_to_db: (form, callback) ->
     @mongo.insert(form, callback)
-
-  retrieve_poll: (query, callback) ->
-    @mongo.find_one(query, callback)
-

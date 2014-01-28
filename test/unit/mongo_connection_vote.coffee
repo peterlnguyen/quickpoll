@@ -45,6 +45,6 @@ describe "mongo_connection unit test for voting", ->
                         it "should retrieve updated document", (done) ->
                           mongo.find_one { rand_id: rand_id }, (updated_error, updated_response) ->
                             should.not.exist(updated_error)
-                            updated_response.target.fields.should.contain("monkey")
+                            updated_response.target.fields.should.containEql("monkey")
                             done()
       

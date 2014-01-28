@@ -5,6 +5,7 @@ block content
   p Welcome to #{title}
 
   p #{JSON.stringify(poll)}
+  p #{JSON.stringify(url_id)}
 
   form(method="POST", action="submitVote", id="submitVote")
     div(name="choices")
