@@ -1,4 +1,5 @@
 Base = require "./base"
+PollRetriever = require "./poll_retriever"
 Render = require "../views/render"
 Mongo = require "../models/mongo_connection"
 
@@ -8,6 +9,7 @@ module.exports = class PollCreator extends Base
 
   constructor: ->
     @mongo = new Mongo
+    @poll_retriever = new PollRetriever
     super()
 
   # equivalent to your "main" function in creating a poll
@@ -21,21 +23,20 @@ module.exports = class PollCreator extends Base
         console.error "Save poll error: #{err}"
         Render.render_error err, save_res
       else
-        @retrieve_and_render save_res, { req, res }
+        url_id = save_res[0].url_id
+        @poll_retriever.retrieve_and_render { url_id }, { res }
+        #@retrieve_and_render { url_id }, { res }
 
-  retrieve_and_render: (retrieve_query, { req, res }) ->
-    # immediately parse custom url_id to retrieve poll
-    url_id = retrieve_query[0].url_id
-
-    @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
-      if err
-        console.error "Retrieve poll error: #{err}"
-        Render.render_error err, retrieve_res
-      else
-        @render_poll { req, res }, retrieve_res
-
-  render_poll: ({ req, res }, poll) ->
-    Render.render_poll poll, res
+#  retrieve_and_render: ({ url_id }, { res }) ->
+#
+#    @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
+#      if err
+#        console.error "Retrieve poll error: #{err}"
+#        Render.render_error err, retrieve_res
+#      else
+#        { poll_query } = retrieve_res
+#        console.log "retrieve res: ", retrieve_res
+#        Render.render_poll { poll_query, url_id }, res
 
   add_id: (form) ->
     form_id = @generate_random 20
@@ -75,6 +76,6 @@ module.exports = class PollCreator extends Base
   save_poll_to_db: (form, callback) ->
     @mongo.insert(form, callback)
 
-  retrieve_poll: (query, callback) ->
-    @mongo.find_one(query, callback)
+#  retrieve_poll: (query, callback) ->
+#    @mongo.find_one(query, callback)
 

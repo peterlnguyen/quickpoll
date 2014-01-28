@@ -1,3 +1,4 @@
+PollRetriever = require "./poll_retriever"
 Mongo = require "../models/mongo_connection"
 Render = require "../views/render"
 
@@ -7,6 +8,7 @@ module.exports = class PollUpdater
 
   constructor: ->
     @mongo = new Mongo
+    @poll_retriever = new PollRetriever
     @votes_list_exclusion = ["name", "url_id"]
 
   # TODO: separate nested callbacks
@@ -20,14 +22,15 @@ module.exports = class PollUpdater
           console.error "Error in count_vote_list: ", count_error
           Render.render_error count_error, res
         else
-          @retrieve_poll { url_id: url_id }, (retrieve_error, retrieve_result) ->
-            if retrieve_error
-              console.log "Retrieve poll error: ", retrieve_error
-              Render.render_error retrieve_error, res
-            else
-              console.log "poll results: ", retrieve_result
-              { poll_results } = retrieve_result
-              Render.render_results poll_results, res
+          @poll_retriever.retrieve_and_render_result { url_id: url_id }, { res }
+          #          @retrieve_poll { url_id: url_id }, (retrieve_error, retrieve_result) ->
+#            if retrieve_error
+#              console.log "Retrieve poll error: ", retrieve_error
+#              Render.render_error retrieve_error, res
+#            else
+#              console.log "poll results: ", retrieve_result
+#              { poll_results } = retrieve_result
+#              Render.render_results { poll_results, url_id }, res
 
   retrieve_poll: (query, callback) ->
     @mongo.find_one(query, callback)

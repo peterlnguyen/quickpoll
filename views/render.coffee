@@ -7,17 +7,17 @@ module.exports = class Render
     res.render "error",
       title: err
   
-  @render_poll: (poll, res) ->
-    # FIXME: temporary fix to remove the ids and other sensitive data
+  @render_poll: ({ poll_query, url_id }, res) ->
     res.render "poll",
       title: "Poll Rendered!"
-      poll: poll.poll_query
-      url_id: poll.url_id
+      poll: poll_query
+      url_id: url_id
 
-  @render_results: (results, res) ->
+  @render_results: ({ poll_results, url_id }, res) ->
     res.render "results",
       title: "Poll Results"
-      results: results
+      results: poll_results
+      url_id: url_id
 
   @render_index: (res) ->
     res.render "index",
