@@ -81,14 +81,24 @@ describe "insert_and_update integration, tests for poll_updater unit test", ->
                                       should.exist(updated_result)
                                       should.not.exist(updated_error)
 
-                                      yes_voters = updated_result.poll_results.choices["Yes"].voter_names
-                                      no_voters = updated_result.poll_results.choices["No"].voter_names
-                                      maybe_voters = updated_result.poll_results.choices["Maybe"].voter_names
+                                      describe "testing append to voter_names", ->
+                                        it "should append to voter_names each voter", ->
+                                          yes_voters = updated_result.poll_results.choices["Yes"].voter_names
+                                          no_voters = updated_result.poll_results.choices["No"].voter_names
+                                          maybe_voters = updated_result.poll_results.choices["Maybe"].voter_names
 
-                                      expect(yes_voters).to.deep.equal(["Jason", "Bob"])
-                                      expect(no_voters).to.deep.equal(["Jason", "Bob"])
-                                      expect(maybe_voters).to.deep.equal([])
+                                          expect(yes_voters).to.deep.equal(["Jason", "Bob"])
+                                          expect(no_voters).to.deep.equal(["Jason", "Bob"])
+                                          expect(maybe_voters).to.deep.equal([])
+
+                                      describe "testing increment count", ->
+                                        it "should increment choice count by 1 per vote", ->
+                                          yes_count = updated_result.poll_results.choices["Yes"].count
+                                          no_count = updated_result.poll_results.choices["No"].count
+                                          maybe_count = updated_result.poll_results.choices["Maybe"].count
+
+                                          yes_count.should.equal(2)
+                                          no_count.should.equal(2)
+                                          maybe_count.should.equal(0)
 
                                       done()
-
-

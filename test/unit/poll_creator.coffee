@@ -31,17 +31,17 @@ describe "poll_creator unit test", ->
             choice_number: 0
             choice: "Yes"
             voter_names: []
-            num_votes: 0
+            count: 0
           "No":
             choice_number: 1
             choice: "No"
             voter_names: []
-            num_votes: 0
+            count: 0
           "Maybe":
             choice_number: 2
             choice: "Maybe"
             voter_names: []
-            num_votes: 0
+            count: 0
 
     it "should extrapolate and format form data", ->
       result = poll_creator.get_formatted_body input
@@ -96,23 +96,23 @@ describe "poll_creator unit test", ->
           choice_number: 0
           choice: "Hello"
           voter_names: []
-          num_votes: 0
+          count: 0
         "World":
           choice_number: 1
           choice: "World"
           voter_names: []
-          num_votes: 0
+          count: 0
         "!":
           choice_number: 2
           choice: "!"
           voter_names: []
-          num_votes: 0
+          count: 0
 
     it "should return a formatted poll_results object", ->
       poll_results = poll_creator.create_poll_results_object input
       expect(poll_results).to.deep.equal(expected_results)
 
-  # @todo
+  # TODO
   describe "render_poll", ->
 
   describe "process_form", ->

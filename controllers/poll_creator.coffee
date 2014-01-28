@@ -55,7 +55,7 @@ module.exports = class PollCreator extends Base
         choice_number: count++
         choice: choice
         voter_names: []
-        num_votes: 0
+        count: 0
     poll_results.choices = choices
     poll_results
 
