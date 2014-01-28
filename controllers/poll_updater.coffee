@@ -11,11 +11,9 @@ module.exports = class PollUpdater
     @poll_retriever = new PollRetriever
     @votes_list_exclusion = ["name", "url_id"]
 
-  # TODO: separate nested callbacks
   process_update: ({ req, res }) ->
     { update_query, url_id } = @get_query_params req
 
-    # FIXME: need to modularize this, in case name is not required
     @count_vote_list { update_query, url_id },
       (count_error, count_vote_response) =>
         if count_error
@@ -53,8 +51,6 @@ module.exports = class PollUpdater
   
   # generates it by iterating through choice_list
   generate_push_query: (choice_list, name) ->
-    # FIXME: placeholder
-    if not name then name = "Bob"
     push_query = {}
     for choice in choice_list
       push_query["poll_results.choices.#{choice}.voter_names"] = name

@@ -103,10 +103,3 @@ describe "poll_creator unit test", ->
     it "should return a formatted poll_results object", ->
       poll_results = poll_creator.create_poll_results_object input
       expect(poll_results).to.deep.equal(expected_results)
-
-  # TODO
-  describe "render_poll", ->
-
-  describe "process_form", ->
-
-  describe "retrieve_and_render", ->
