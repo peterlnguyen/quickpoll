@@ -23,17 +23,6 @@ module.exports = class PollUpdater
           Render.render_error count_error, res
         else
           @poll_retriever.retrieve_and_render_result { url_id: url_id }, { res }
-          #          @retrieve_poll { url_id: url_id }, (retrieve_error, retrieve_result) ->
-#            if retrieve_error
-#              console.log "Retrieve poll error: ", retrieve_error
-#              Render.render_error retrieve_error, res
-#            else
-#              console.log "poll results: ", retrieve_result
-#              { poll_results } = retrieve_result
-#              Render.render_results { poll_results, url_id }, res
-
-  retrieve_poll: (query, callback) ->
-    @mongo.find_one(query, callback)
 
   # brings together necessary data to update the vote
   get_query_params: (req) ->

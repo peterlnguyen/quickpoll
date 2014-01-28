@@ -25,18 +25,6 @@ module.exports = class PollCreator extends Base
       else
         url_id = save_res[0].url_id
         @poll_retriever.retrieve_and_render_query { url_id }, { res }
-        #@retrieve_and_render { url_id }, { res }
-
-#  retrieve_and_render: ({ url_id }, { res }) ->
-#
-#    @retrieve_poll { url_id: url_id }, (err, retrieve_res) =>
-#      if err
-#        console.error "Retrieve poll error: #{err}"
-#        Render.render_error err, retrieve_res
-#      else
-#        { poll_query } = retrieve_res
-#        console.log "retrieve res: ", retrieve_res
-#        Render.render_poll { poll_query, url_id }, res
 
   add_id: (form) ->
     form_id = @generate_random 20
@@ -75,7 +63,3 @@ module.exports = class PollCreator extends Base
 
   save_poll_to_db: (form, callback) ->
     @mongo.insert(form, callback)
-
-#  retrieve_poll: (query, callback) ->
-#    @mongo.find_one(query, callback)
-
