@@ -80,9 +80,15 @@ describe "insert_and_update integration, tests for poll_updater unit test", ->
                                     poll_updater.retrieve_poll { url_id: url_id }, (updated_error, updated_result) ->
                                       should.exist(updated_result)
                                       should.not.exist(updated_error)
-                                      console.log "updated_result: ", updated_result.poll_results.choices
-                                      assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Yes"].voter_names
-                                      assert.equal ["Jason", "Bob"], updated_result.poll_results.choices["Maybe"].voter_names
+
+                                      yes_voters = updated_result.poll_results.choices["Yes"].voter_names
+                                      no_voters = updated_result.poll_results.choices["No"].voter_names
+                                      maybe_voters = updated_result.poll_results.choices["Maybe"].voter_names
+
+                                      expect(yes_voters).to.deep.equal(["Jason", "Bob"])
+                                      expect(no_voters).to.deep.equal(["Jason", "Bob"])
+                                      expect(maybe_voters).to.deep.equal([])
+
                                       done()
 
 
