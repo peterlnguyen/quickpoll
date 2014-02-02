@@ -17,7 +17,6 @@ exports.create_form = (req, res) ->
   poll_creator.process_form { req: req, res: res }
 
 exports.submit_vote = (req, res) ->
-  console.log "goes here"
   poll_updater.process_update { req: req, res: res }
 
 exports.render_poll = (req, res) ->

@@ -1,3 +1,9 @@
+- add in form validation
+  - need to make sure choices are unique
+- dynamically extend choices field if needed
+- figure out graphing library
+  bar chart from d3: http://bl.ocks.org/Caged/6476579
+
 - refactored into poll_retrieval, now hardcoded stuff makes integration testing difficult
   - need to test poll_retriever.retrieve_and_render_query and results,
     currently only testing the generic retrieve_poll function
