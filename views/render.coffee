@@ -13,9 +13,10 @@ module.exports = class Render
       poll: poll_query
       url_id: url_id
 
-  @render_results: ({ poll_results, url_id }, res) ->
+  @render_results: ({ poll_query, poll_results, url_id }, res) ->
     res.render "results",
       title: "Poll Results"
+      question: poll_query.question
       results: poll_results
       url_id: url_id
 

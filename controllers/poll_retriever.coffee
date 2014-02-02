@@ -24,8 +24,8 @@ module.exports = class PollRetriever
       if retrieve_error
         Render.render_error retrieve_error, res
       else
-        { poll_results } = retrieve_result
-        Render.render_results { poll_results, url_id }, res
+        { poll_query, poll_results } = retrieve_result
+        Render.render_results { poll_query, poll_results, url_id }, res
 
   retrieve_poll: (query, callback) ->
     @mongo.find_one(query, callback)

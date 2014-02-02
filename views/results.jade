@@ -1,6 +1,16 @@
 extends layout
 
 block content
+  script(type="text/javascript").
+    var results =!{JSON.stringify(results)}
+    var question =!{JSON.stringify(question)}
+    var url_id =!{JSON.stringify(url_id)}
+    var title =!{JSON.stringify(title)}
+  script(src="http://d3js.org/d3.v3.min.js")
+  script(src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js")
+  script(src="/javascripts/d3.js")
+  link(rel='stylesheet', href='/stylesheets/d3.css')
+
   h1= title
   p Welcome to #{JSON.stringify(results)}
   p

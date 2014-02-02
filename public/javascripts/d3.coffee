@@ -22,20 +22,34 @@ svg = d3.select("body").append("svg").attr("width", width + margin.left + margin
 
 svg.call tip
 
-d3.tsv "data.tsv", type, (error, data) ->
-  x.domain data.map((d) ->
-    d.letter
-  )
-  y.domain [0, d3.max(data, (d) ->
-    d.frequency
-  )]
-  svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call xAxis
-  svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text "Frequency"
-  svg.selectAll(".bar").data(data).enter().append("rect").attr("class", "bar").attr("x", (d) ->
-    x d.letter
-  ).attr("width", x.rangeBand()).attr("y", (d) ->
-    y d.frequency
-  ).attr("height", (d) ->
-    height - y(d.frequency)
-  ).on("mouseover", tip.show).on "mouseout", tip.hide
+console.log url_id
+console.log title
+console.log question
+
+
+graph_data = (results) ->
+  choices = results.choices
+  for value, key in choices
+    console.log "value: ", value
+    console.log "key: ", key
+    { choice, voter_names, count } = value
+
+graph_data results
+
+#d3.tsv "./data.tsv", type, (error, data) ->
+#  x.domain data.map((d) ->
+#    d.letter
+#  )
+#  y.domain [0, d3.max(data, (d) ->
+#    d.frequency
+#  )]
+#  svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call xAxis
+#  svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text "Frequency"
+#  svg.selectAll(".bar").data(data).enter().append("rect").attr("class", "bar").attr("x", (d) ->
+#    x d.letter
+#  ).attr("width", x.rangeBand()).attr("y", (d) ->
+#    y d.frequency
+#  ).attr("height", (d) ->
+#    height - y(d.frequency)
+#  ).on("mouseover", tip.show).on "mouseout", tip.hide
 
