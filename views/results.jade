@@ -3,4 +3,5 @@ extends layout
 block content
   h1= title
   p Welcome to #{JSON.stringify(results)}
-  p Welcome to #{JSON.stringify(url_id)}
+  p
+    a(href="http://localhost:3000/polls/#{url_id}") go back to poll 
