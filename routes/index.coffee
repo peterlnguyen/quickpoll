@@ -23,3 +23,8 @@ exports.render_poll = (req, res) ->
   { url_id } = req.route.params
   { url_id } = req.body if url_id is "submitVote"
   poll_retriever.retrieve_and_render_query { url_id, res }
+
+exports.render_results = (req, res) ->
+  { url_id } = req.route.params
+  { url_id } = req.body if url_id is "submitVote"
+  poll_retriever.retrieve_and_render_result { url_id, res }

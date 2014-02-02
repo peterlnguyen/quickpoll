@@ -32,13 +32,16 @@ app.use express.errorHandler() if "development" is app.get("env")
 app.post "/createForm", routes.create_form
 app.post "/submitVote", routes.submit_vote
 
+app.get "/results/:url_id", routes.render_results
+app.get "/result/:url_id", routes.render_results
+
 app.post "/polls/submitVote", routes.submit_vote
 app.post "/poll/submitVote", routes.submit_vote
 
-app.all "/poll/:url_id", routes.render_poll
 app.all "/polls/:url_id", routes.render_poll
-#app.get "/poll/:url_id/:poll_question", (req, res, next) -> next()
+app.all "/poll/:url_id", routes.render_poll
 #app.get "/polls/:url_id/:poll_question", routes.render_poll
+#app.get "/poll/:url_id/:poll_question", (req, res, next) -> next()
 
 app.get "/", routes.index
 

@@ -7,4 +7,5 @@
 - refactored into poll_retrieval, now hardcoded stuff makes integration testing difficult
   - need to test poll_retriever.retrieve_and_render_query and results,
     currently only testing the generic retrieve_poll function
-- create link pathing to generate results page
+
+- append question to poll url like stackoverflow e.g. "poll/what-hotel-to-go-to-for-vegas" 
