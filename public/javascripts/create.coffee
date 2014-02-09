@@ -13,15 +13,28 @@ $(document).ready ->
     for value, key in inputs
       if value is ""
         error_flag = true
-    console.log "error?", error_flag
     error_flag
 
   # validates and submits form
   $("#pollSubmit").click ->
     inputs = extract_fields $("#pollForm :input")
-    if not has_errors inputs
+
+    if has_errors inputs
+      console.log "input errors!"
+    else if has_duplicates ".choices"
+      console.log "duplicate errors!"
+    else
+      console.log "no errors!"
       $("#pollForm").submit()
         
-
+  has_duplicates = (identifier) ->
+    choices = {}
+    duplicate_flag = false
+    $("#{identifier}").each( () ->
+      value = $(this).val()
+      if choices[value] then duplicate_flag = true
+      else choices[value] = "foobar"
+    )
+    duplicate_flag
      
 

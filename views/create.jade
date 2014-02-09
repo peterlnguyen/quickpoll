@@ -9,20 +9,21 @@ block content
       input(type="text", name="question", id="question" required)
     div
       label Choice 1:
-      input(type="text", name="choices", id="choice1")
+      input(type="text", name="choices", id="choice1", class="choices")
     div
       label Choice 2:
-      input(type="text", name="choices", id="choice2")
+      input(type="text", name="choices", id="choice2", class="choices")
     div
       label Choice 3:
-      input(type="text", name="choices", id="choice3")
+      input(type="text", name="choices", id="choice3", class="choices")
     div
       label Choice 4:
-      input(type="text", name="choices", id="choice4")
+      input(type="text", name="choices", id="choice4", class="choices")
     div
       p Allow multiple answers? 
         input(type="checkbox", name="allow_multiple", id="allow_multiple")
     div
       p Require name? 
         input(type="checkbox", name="require_name", id="require_name")
-    input(type="button", class="btn", id="pollSubmit", value="Submit") 
+    // input(type="button", class="btn", id="pollSubmit", value="Submit")
+  button(class="btn", id="pollSubmit", value="Submit") Submit
