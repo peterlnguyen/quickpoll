@@ -4,27 +4,28 @@
     var append_choice, bind_append, bind_next, current_choice, current_id, extract_fields, has_duplicates, has_errors;
     current_choice = 5;
     current_id = "#choice5";
-    bind_append(current_id);
     bind_append = function(identifier) {
-      $("" + identifier).unbind();
-      return $("" + identifier).keyup(function() {
+      return $(identifier).keyup(function() {
         return bind_next();
       });
     };
     bind_next = function() {
+      $(current_id).unbind();
       current_choice++;
       current_id = "#choice" + current_choice;
       append_choice();
+      console.log("now current choice: ", current_choice);
       return bind_append(current_id);
     };
     append_choice = function() {
-      return $("#choice-list").append(' \
-      <div> \
-        <label> Choice ' + current_choice + ':</label> \
-        <input type="text" name="choices" id="' + current_id + '" class="choices"> \
-      </div> \
+      return $("#choice-list").append('\
+      <div>\
+        <label> Choice ' + current_choice + ':</label>\
+        <input type="text" name="choices" id="choice' + current_choice + '" class="choices">\
+      </div>\
     ');
     };
+    bind_append(current_id);
     extract_fields = function(form) {
       var values;
       values = {};
