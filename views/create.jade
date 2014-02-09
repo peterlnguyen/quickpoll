@@ -7,18 +7,22 @@ block content
     div
       label(for="question") Question:
       input(type="text", name="question", id="question" required)
-    div
-      label Choice 1:
-      input(type="text", name="choices", id="choice1", class="choices")
-    div
-      label Choice 2:
-      input(type="text", name="choices", id="choice2", class="choices")
-    div
-      label Choice 3:
-      input(type="text", name="choices", id="choice3", class="choices")
-    div
-      label Choice 4:
-      input(type="text", name="choices", id="choice4", class="choices")
+    div#choice-list
+      div
+        label Choice 1:
+        input(type="text", name="choices", id="choice1", class="choices")
+      div
+        label Choice 2:
+        input(type="text", name="choices", id="choice2", class="choices")
+      div
+        label Choice 3:
+        input(type="text", name="choices", id="choice3", class="choices")
+      div
+        label Choice 4:
+        input(type="text", name="choices", id="choice4", class="choices")
+      div
+        label Choice 5 (choices will increase dynamically as you type):
+        input(type="text", name="choices", id="choice5", class="choices")
     div
       p Allow multiple answers? 
         input(type="checkbox", name="allow_multiple", id="allow_multiple")

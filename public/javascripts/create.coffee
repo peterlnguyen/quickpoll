@@ -1,5 +1,37 @@
 $(document).ready ->
 
+  current_choice = 5
+  current_id = "#choice5"
+
+  bind_append(current_id)
+
+  bind_append = (identifier) ->
+    $("#{identifier}").unbind()
+    $("#{identifier}").keyup ->
+      bind_next()
+
+  bind_next = ->
+#    $("#choice-list").append(' 
+#      <div> 
+#        <label> Choice ' + current_choice + ':</label> 
+#        <input type="text" name="choices" id="choice' + current_id + ' class="choices"> 
+#      </div> 
+#    ')
+    current_choice++
+    current_id = "#choice" + current_choice
+    append_choice()
+    bind_append current_id
+  
+  append_choice = ->
+    $("#choice-list").append(' 
+      <div> 
+        <label> Choice ' + current_choice + ':</label> 
+        <input type="text" name="choices" id="' + current_id + '" class="choices"> 
+      </div> 
+    ')
+
+  
+
   # helper function, almost unnecessary
   extract_fields = (form) ->
     values = {}
@@ -36,5 +68,6 @@ $(document).ready ->
       else choices[value] = "foobar"
     )
     duplicate_flag
+
      
 
